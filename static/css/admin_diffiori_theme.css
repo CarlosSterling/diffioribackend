@@ -1,0 +1,1013 @@
+/* admin_custom_v1.css - Exact Frontend Theme Mapping */
+:root {
+  --diffiori-beige: #F5F2EB; /* Exact background from Tailwind */
+  --diffiori-brown: #4a201a; /* Primary-900 for dark text/elements */
+  --diffiori-brown-hover: #361713; 
+  --diffiori-red: #8B3D30; /* Exact Primary-DEFAULT from Tailwind */
+  --diffiori-red-hover: #7b362a;
+  --diffiori-gold: #C5A059; /* Brand Gold */
+  --diffiori-cream: #FAF9F6;
+  --bg-card: #FFFFFF;
+}
+
+/* Base Body & Layout */
+body, .content-wrapper, .wrapper {
+    background-color: var(--diffiori-beige) !important;
+    color: var(--diffiori-brown) !important;
+    font-family: 'Inter', system-ui, sans-serif !important;
+}
+
+/* Typography Overrides */
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, label, th {
+    color: var(--diffiori-brown) !important;
+}
+
+/* Sidebar Overrides */
+.main-sidebar, .sidebar-dark-primary {
+    background: linear-gradient(to bottom, #8B3D30, #000000) !important;
+    border-right: none !important;
+}
+
+/* Sidebar Brand / Logo Area */
+.brand-link {
+    background-color: transparent !important;
+    border-bottom: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 1.5rem 1rem !important; /* Fixed padding for brand */
+    min-height: 80px !important;
+}
+.sidebar .nav-sidebar {
+    margin-top: 4rem !important; /* Separates Panel from the logo line */
+}
+/* Specifically target the Dashboard item to add space below it */
+.nav-sidebar > .nav-item:first-child {
+    margin-bottom: 0.5rem !important; /* Keeps INICIO close to Panel */
+}
+.brand-text, .brand-link span {
+    display: none !important;
+}
+.brand-image {
+    float: none !important;
+    max-height: 80px !important; /* Slightly larger logo */
+    width: auto !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    filter: brightness(0) invert(1) !important;
+    opacity: 1 !important;
+}
+
+/* Global Avatar Override - Hide default icons / broken images */
+.user-panel .image img, .user-panel .image i, .nav-link .user-image, .nav-link i.fa-user, .nav-link i.fa-user-circle {
+    display: none !important;
+}
+
+/* Hide the redundant logo image in user-panel if it exists */
+.user-panel .image::before {
+    display: none !important;
+}
+
+/* Specific sizing for the top navbar avatar to keep it balanced */
+.nav-item.dropdown.user-menu > a::before {
+    content: '';
+    display: inline-block;
+    width: 2.5rem;
+    height: 1.2rem;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+    background-color: var(--diffiori-beige);
+    -webkit-mask-image: url('../img/logoDiffiori.png');
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: left center;
+    mask-image: url('../img/logoDiffiori.png');
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: left center;
+}
+
+/* Ensure row action links are white inside dark buttons */
+.object-tools .addlink, .viewsitelink, .changelink,
+a.addlink, a.changelink, a.viewsitelink,
+.app-list a.btn, .table a.btn {
+    color: #ffffff !important;
+}
+
+/* User panel (Sidebar) - Hidden as requested to move to top right */
+.user-panel {
+    display: none !important;
+}
+
+/* Sidebar App Headers (Inicio, Tienda, etc) */
+.nav-header {
+    color: var(--diffiori-cream) !important; /* Cream instead of Gold */
+    opacity: 1 !important; /* Fully visible */
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    font-size: 0.75rem !important;
+    letter-spacing: 0.5px;
+    padding: 1.5rem 1rem 0.5rem 1.5rem !important;
+}
+
+/* Sidebar Navigation Items - No expansion on hover */
+
+.sidebar-dark-primary .nav-sidebar .nav-item > .nav-link {
+    color: var(--diffiori-beige) !important; /* Full brand beige for clarity */
+    border-radius: 0.5rem !important;
+    margin: 0.2rem 0.8rem !important;
+    font-weight: 500 !important;
+    padding: 0.6rem 1rem !important;
+    transition: all 0.2s ease;
+}
+
+/* Improve icon spacing and text truncation */
+.nav-sidebar .nav-link > i {
+    margin-right: 0.8rem !important;
+    font-size: 1.1rem !important;
+    width: 1.6rem !important;
+    text-align: center !important;
+}
+
+.nav-sidebar .nav-link p {
+    margin-bottom: 0 !important;
+}
+
+/* Hover visibility removed as requested */
+/* .main-sidebar:hover .nav-sidebar .nav-link p {
+    text-overflow: unset !important;
+} */
+
+.sidebar-dark-primary .nav-sidebar .nav-item > .nav-link:hover {
+    background-color: rgba(255,255,255,0.05) !important;
+    color: #ffffff !important;
+}
+
+/* Refined Active State (Red/Beige highlight) */
+[class*="sidebar-dark-"] .nav-sidebar > .nav-item > .nav-link.active,
+.sidebar-dark-primary .nav-sidebar .nav-item > .nav-link.active {
+    background: var(--diffiori-red) !important; /* Red background for active item */
+    color: #ffffff !important;
+    border-left: none !important;
+    border-radius: 0.5rem !important;
+    margin: 0.2rem 0.8rem !important;
+    box-shadow: 0 4px 8px rgba(139, 61, 48, 0.3) !important;
+}
+
+[class*="sidebar-dark-"] .nav-sidebar > .nav-item > .nav-link.active i,
+.sidebar-dark-primary .nav-sidebar .nav-item > .nav-link.active i {
+    color: #ffffff !important;
+}
+
+/* Navbar top */
+.main-header.navbar-white.navbar-light {
+    background-color: var(--diffiori-beige) !important;
+    border-bottom: 1px solid rgba(74, 32, 26, 0.1) !important;
+}
+
+/* Navbar Links */
+.main-header.navbar-light .navbar-nav .nav-link {
+    color: var(--diffiori-brown) !important;
+    font-weight: 600 !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+}
+.main-header.navbar-light .navbar-nav .nav-link:hover {
+    color: var(--diffiori-red) !important;
+}
+
+/* Move Admin Profile and Icons to the Right (Navbar) */
+.main-header .navbar-nav.ml-auto {
+    display: flex !important;
+    align-items: center !important;
+}
+
+.main-header .navbar-nav.ml-auto .nav-item .nav-link {
+    color: var(--diffiori-brown) !important;
+    display: flex !important;
+    align-items: center !important;
+    padding: 0.5rem 1rem !important;
+}
+
+/* Style ALL icons in the top right navbar to be RED and Visible */
+.main-header .navbar-nav.ml-auto .nav-item .nav-link i,
+.main-header .navbar-nav.ml-auto .nav-item .nav-link::before,
+.main-header .navbar-nav.ml-auto .nav-item .nav-link p i {
+    color: var(--diffiori-red) !important;
+    font-size: 1.4rem !important;
+    visibility: visible !important;
+    display: inline-block !important;
+    opacity: 1 !important;
+    margin-right: 5px !important;
+}
+
+/* Specific fix for the user-menu icon */
+.user-menu .nav-link span, 
+.user-menu .nav-link .d-none.d-md-inline {
+    display: none !important; /* Hide text, we want only the icon */
+}
+
+.user-menu .nav-link::before {
+    content: "\f2bd" !important; /* User circle */
+    font-family: "Font Awesome 5 Free" !important;
+    font-weight: 900 !important;
+    color: var(--diffiori-red) !important;
+}
+
+/* If using an img, we'll give it a red border as a fallback */
+.user-menu .nav-link img.user-image {
+    border: 2px solid var(--diffiori-red) !important;
+    display: inline-block !important;
+    width: 30px !important;
+    height: 30px !important;
+}
+
+/* Fix Blue Links */
+a {
+    color: var(--diffiori-red) !important;
+    transition: color 0.2s ease;
+}
+a:hover {
+    color: var(--diffiori-brown-hover) !important;
+}
+
+/* Base body tweaks */
+body {
+    background-color: var(--diffiori-beige) !important;
+}
+
+/* Fix Cards */
+.content-wrapper {
+    background-color: var(--diffiori-beige) !important;
+}
+.card {
+    background-color: var(--bg-card) !important;
+    border: none !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+    overflow: hidden;
+}
+.card-header {
+    background-color: transparent !important;
+    border-bottom: 1px solid rgba(0,0,0,0.05) !important;
+}
+
+/* Clearer Tabs for inner forms */
+.nav-tabs {
+    border-bottom: 2px solid rgba(0,0,0,0.05) !important;
+    margin-bottom: 1rem !important;
+}
+.nav-tabs .nav-link {
+    color: var(--diffiori-brown) !important;
+    font-weight: 500 !important;
+    border: none !important;
+    border-bottom: 2px solid transparent !important;
+    background: transparent !important;
+    padding: 0.75rem 1.5rem !important;
+    margin-right: 0.5rem !important;
+    transition: all 0.2s ease !important;
+}
+.nav-tabs .nav-link:hover {
+    color: var(--diffiori-red) !important;
+    background-color: rgba(0,0,0,0.02) !important;
+    border-radius: 6px 6px 0 0 !important;
+}
+.nav-tabs .nav-link.active {
+    color: var(--diffiori-red) !important;
+    font-weight: 700 !important;
+    border-bottom: 2px solid var(--diffiori-red) !important;
+    background-color: transparent !important;
+}
+
+/* Cards & Info Boxes */
+.card, .info-box {
+    background-color: var(--bg-card) !important;
+    border: none !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.04) !important;
+}
+
+.card-header {
+    border-bottom: 1px solid rgba(74, 32, 26, 0.05) !important;
+    background-color: transparent !important;
+    padding: 1.25rem 1.5rem !important;
+}
+
+/* GLOBAL LINKS (Fixing the default blue) */
+a {
+    color: var(--diffiori-red);
+    text-decoration: none;
+}
+a:hover {
+    color: var(--diffiori-brown);
+}
+
+/* Fixing Table links specifically */
+table.dataTable tbody tr td a, .table td a {
+    color: var(--diffiori-brown) !important;
+    font-weight: 600;
+}
+table.dataTable tbody tr td a:hover, .table td a:hover {
+    color: var(--diffiori-red) !important;
+}
+
+/* Table Headers (Fix bright blue sorting text) */
+table.dataTable thead th, .table th, table.dataTable thead th a {
+    color: var(--diffiori-brown) !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid rgba(74, 32, 26, 0.1) !important;
+}
+
+/* Alerts / Success Messages */
+.alert-success {
+    background-color: #E8F3EE !important; /* Soft green */
+    color: #2D6A4F !important; /* Dark green text */
+    border: 1px solid #B7E4C7 !important;
+    border-radius: 8px !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02) !important;
+}
+.alert-success a {
+    color: #1a4f38 !important;
+    font-weight: 700 !important;
+}
+
+/* Buttons */
+/* Base Buttons - Ultra Compact */
+.btn-primary, .btn-success, .btn-info, input[type="submit"] {
+    background-color: var(--diffiori-red) !important;
+    border-color: var(--diffiori-red) !important;
+    color: #ffffff !important;
+    border-radius: 12px !important; /* Pill style */
+    font-weight: 700 !important;
+    padding: 0.2rem 0.6rem !important;
+    font-size: 0.65rem !important;
+    text-transform: uppercase;
+    letter-spacing: 0.5px !important;
+    box-shadow: 0 2px 4px rgba(139, 61, 48, 0.1) !important;
+    transition: all 0.2s ease !important;
+    height: 24px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* Base Buttons */
+.btn, button, input[type="submit"], input[type="button"] {
+    border-radius: 6px !important;
+    font-weight: 500 !important;
+    transition: all 0.2s ease !important;
+    color: #ffffff !important; /* Force white text */
+}
+
+/* Primary btn overrides - Ultra Compact */
+.btn-primary, .btn-info, .btn-success {
+    background-color: var(--diffiori-red) !important;
+    border-color: var(--diffiori-red) !important;
+    color: #ffffff !important;
+    font-size: 0.75rem !important; /* Smaller text */
+    padding: 0.3rem 0.8rem !important; /* Minimalist padding */
+}
+.btn-primary:hover, .btn-info:hover, .btn-success:hover {
+    background-color: var(--diffiori-red-hover) !important;
+    border-color: var(--diffiori-red-hover) !important;
+    color: #ffffff !important;
+    transform: translateY(-1px);
+}
+.btn-outline-primary {
+    background-color: transparent !important;
+    color: var(--diffiori-red) !important;
+    border: 1px solid var(--diffiori-red) !important;
+    box-shadow: none !important;
+}
+.btn-outline-primary:hover {
+    background-color: var(--diffiori-red) !important;
+    color: #ffffff !important;
+}
+
+/* Filter / Action bars */
+#changelist-filter {
+    background-color: var(--bg-card) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.04) !important;
+    border: none !important;
+}
+#changelist-filter h2 {
+    background-color: rgba(74, 32, 26, 0.05) !important;
+    color: var(--diffiori-brown) !important;
+    border-radius: 12px 12px 0 0 !important;
+}
+
+/* Forms / Inputs - Unified Pill Style Ultra-Compact */
+.form-control, select, input[type="text"], input[type="number"], input[type="file"] {
+    border-radius: 15px !important;
+    border: 1px solid rgba(74, 32, 26, 0.1) !important;
+    padding: 0.2rem 0.8rem !important; /* Ultra-compact padding */
+    font-size: 0.75rem !important; /* Tiny text */
+    font-weight: 500 !important;
+    transition: all 0.3s ease !important;
+    background-color: #ffffff !important;
+    height: 28px !important; /* Fixed small height */
+}
+
+.form-control:focus, select:focus, input:focus {
+    border-color: var(--diffiori-red) !important;
+    box-shadow: 0 0 0 0.15rem rgba(139, 61, 48, 0.1) !important;
+    outline: none !important;
+}
+
+/* Specific fix for file inputs in Django admin */
+input[type="file"] {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+}
+
+/* --- USABILITY ENHANCEMENTS --- */
+
+/* Sticky Save Bar in Change Forms - Compact & Elegant */
+.submit-row {
+    position: sticky !important;
+    bottom: 0 !important;
+    z-index: 1000 !important;
+    background-color: var(--diffiori-beige) !important;
+    padding: 0.4rem 1rem !important; /* Tighter padding */
+    margin: 1rem -1.25rem -1.25rem -1.25rem !important;
+    border-top: 1px solid rgba(74, 32, 26, 0.1) !important;
+    border-radius: 0 0 12px 12px !important;
+    box-shadow: 0 -4px 10px rgba(0,0,0,0.05) !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 6px !important; /* Minimal spacing */
+    justify-content: flex-end !important;
+}
+
+.submit-row input, .submit-row a {
+    margin: 0 !important;
+    height: 26px !important; /* Fixed small height */
+    padding: 0 12px !important;
+    font-size: 0.65rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.5px !important;
+    border-radius: 15px !important; /* Fully pill-shaped */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* Specific button color overrides - Ultra Aggressive to overcome specificity/cache */
+.submit-row a.deletelink, 
+.submit-row .deletelink a,
+.submit-row input.btn-danger,
+.btn-danger,
+.btn-outline-danger {
+    background-color: #b32d1f !important; /* Solid Red Oxide */
+    border-color: #b32d1f !important;
+    color: white !important;
+    box-shadow: 0 4px 8px rgba(179, 45, 31, 0.2) !important;
+    transition: all 0.2s ease !important;
+    opacity: 1 !important;
+    text-shadow: none !important;
+}
+
+.submit-row a.deletelink:hover,
+.submit-row .deletelink a:hover,
+.btn-danger:hover,
+.btn-outline-danger:hover {
+    background-color: #8f2419 !important;
+    border-color: #8f2419 !important;
+    color: white !important;
+    transform: translateY(-1px);
+}
+
+.submit-row a.historylink, 
+.submit-row .historylink a,
+.btn-secondary,
+.btn-outline-secondary,
+.btn-info,
+.btn-outline-info {
+    background-color: #5a6268 !important; /* Elegant Charcoal Gray */
+    border-color: #5a6268 !important;
+    color: white !important;
+    box-shadow: 0 4px 8px rgba(90, 98, 104, 0.2) !important;
+    transition: all 0.2s ease !important;
+    opacity: 1 !important;
+    text-shadow: none !important;
+}
+
+.submit-row a.historylink:hover,
+.submit-row .historylink a:hover,
+.btn-secondary:hover,
+.btn-outline-secondary:hover {
+    background-color: #495057 !important;
+    border-color: #495057 !important;
+    color: white !important;
+    transform: translateY(-1px);
+}
+
+/* Status Badges for Boolean Fields in List Views */
+.field-is_active i.fa-check-circle, .field-is_published i.fa-check-circle {
+    background-color: #E8F3EE !important;
+    color: #2D6A4F !important;
+    padding: 2px 8px !important;
+    border-radius: 20px !important;
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
+}
+
+.field-is_active i.fa-times-circle, .field-is_published i.fa-times-circle {
+    background-color: #F8E8E8 !important;
+    color: #8B3D30 !important;
+    padding: 2px 8px !important;
+    border-radius: 20px !important;
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
+}
+
+/* Improve Table Row Hover */
+.table hover tbody tr:hover {
+    background-color: rgba(139, 61, 48, 0.03) !important;
+}
+
+/* --- HIGH-END ELEGANT LOGIN & LOGOUT --- */
+
+.login-page, .register-page {
+    background-color: var(--diffiori-beige) !important;
+    height: 100vh !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.login-box {
+    width: 420px !important; /* Slightly wider for better proportions */
+}
+
+.login-box .card {
+    border-radius: 20px !important;
+    border: 1px solid rgba(74, 32, 26, 0.04) !important;
+    box-shadow: 0 20px 60px rgba(74, 32, 26, 0.08), 0 10px 20px rgba(74, 32, 26, 0.04) !important;
+    background-color: #ffffff !important;
+    overflow: hidden;
+}
+
+.login-box .card-header {
+    border-bottom: none !important;
+    padding: 3rem 2rem 1rem 2rem !important;
+    text-align: center;
+}
+
+.login-box .login-logo {
+    margin-bottom: 2rem !important;
+}
+
+.login-box .login-logo img {
+    max-width: 260px !important;
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.05));
+}
+
+.login-card-body, .register-card-body {
+    padding: 2rem 2.5rem 3rem 2.5rem !important;
+}
+
+.login-box .login-card-body .login-box-msg {
+    color: var(--diffiori-brown) !important;
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+    margin-bottom: 2rem !important;
+    opacity: 0.85;
+}
+
+/* Elegant Input Styling - No gray boxes */
+.login-box .input-group {
+    margin-bottom: 1.5rem !important;
+}
+
+.login-box .input-group .form-control {
+    border: 1.5px solid rgba(74, 32, 26, 0.1) !important;
+    border-radius: 12px !important;
+    height: 52px !important;
+    padding: 0 1.25rem !important;
+    font-size: 0.95rem !important;
+    transition: all 0.3s ease !important;
+    background-color: #fafafa !important;
+}
+
+.login-box .input-group .form-control:focus {
+    border-color: var(--diffiori-brown) !important;
+    background-color: #ffffff !important;
+    box-shadow: none !important;
+}
+
+/* Hide the default bootstrap input-group-append gray boxes */
+.login-box .input-group .input-group-text {
+    background-color: transparent !important;
+    border: none !important;
+    color: var(--diffiori-brown) !important;
+    opacity: 0.5;
+    position: absolute;
+    right: 15px;
+    z-index: 10;
+    line-height: 52px;
+    height: 52px;
+    padding: 0;
+}
+
+/* Professional Red Button (Matches Frontend Primary) */
+.login-box .btn-primary, 
+.login-box .btn-block,
+.login-box a.btn-primary {
+    background-color: var(--diffiori-red) !important;
+    border: none !important;
+    color: white !important;
+    border-radius: 12px !important;
+    padding: 14px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 0.85rem !important;
+    margin-top: 1rem !important;
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
+}
+
+.login-box .btn-primary:hover,
+.login-box a.btn-primary:hover {
+    background-color: var(--diffiori-red-hover) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 10px 25px rgba(139, 61, 48, 0.2) !important;
+}
+
+/* Sidebar Logout Button */
+.nav-sidebar a[href*="logout"] {
+    background-color: transparent !important;
+    color: var(--diffiori-red) !important;
+    border: 1px solid rgba(139, 61, 48, 0.4) !important;
+    border-radius: 10px !important;
+    margin: 1.5rem 1rem !important;
+    transition: all 0.2s ease;
+    font-size: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 10px !important;
+}
+
+.nav-sidebar a[href*="logout"]::after {
+    content: "Cerrar sesión" !important;
+    font-size: 0.85rem !important;
+    color: var(--diffiori-red) !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.5px;
+}
+
+.nav-sidebar a[href*="logout"]:hover {
+    background-color: var(--diffiori-red) !important;
+    border-color: var(--diffiori-red) !important;
+}
+
+.nav-sidebar a[href*="logout"]:hover::after {
+    color: white !important;
+}
+
+/* Header Dropdown Logout Link (Fix Visibility) */
+.user-menu .dropdown-item[href*="logout"], 
+.navbar-nav.ml-auto .dropdown-item[href*="logout"] {
+    color: var(--diffiori-brown) !important;
+    font-weight: 600 !important;
+    padding: 10px 20px !important;
+    display: flex !important;
+    align-items: center !important;
+    font-size: 0 !important; /* Still want to rename it */
+}
+
+.user-menu .dropdown-item[href*="logout"]::after,
+.navbar-nav.ml-auto .dropdown-item[href*="logout"]::after {
+    content: "Cerrar sesión" !important;
+    font-size: 0.9rem !important;
+    color: var(--diffiori-brown) !important;
+}
+
+.user-menu .dropdown-item[href*="logout"] i,
+.navbar-nav.ml-auto .dropdown-item[href*="logout"] i {
+    color: var(--diffiori-red) !important;
+    margin-right: 10px !important;
+}
+
+.user-menu .dropdown-item[href*="logout"]:hover,
+.navbar-nav.ml-auto .dropdown-item[href*="logout"]:hover {
+    background-color: var(--diffiori-beige) !important;
+    color: var(--diffiori-red) !important;
+}
+
+.user-menu .dropdown-item[href*="logout"]:hover::after {
+    color: var(--diffiori-red) !important;
+}
+
+/* --- BETTER INTUITION FOR LIST VIEW LINKS --- */
+.results table tbody tr:hover {
+    background-color: rgba(245, 242, 235, 0.5) !important;
+}
+
+.results table tbody td a {
+    color: var(--diffiori-brown) !important;
+    font-weight: 600 !important;
+    transition: all 0.2s ease !important;
+    padding: 2px 4px;
+    border-radius: 4px;
+}
+
+.results table tbody td a:hover {
+    color: var(--diffiori-red) !important;
+    text-decoration: underline !important;
+    background-color: rgba(139, 61, 48, 0.05);
+}
+
+/* New Minimalist Edit Icon Styling */
+.edit-icon-link {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 8px !important;
+    background-color: rgba(139, 61, 48, 0.05) !important;
+    color: var(--diffiori-red) !important;
+    font-size: 1.1rem !important;
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+    border: 1px solid rgba(139, 61, 48, 0.1) !important;
+    text-decoration: none !important;
+}
+
+.edit-icon-link:hover {
+    background-color: var(--diffiori-red) !important;
+    color: white !important;
+    transform: scale(1.1) translateY(-2px) !important;
+    box-shadow: 0 4px 8px rgba(139, 61, 48, 0.2) !important;
+    text-decoration: none !important;
+}
+
+/* --- ULTRA-PREMIUM EDITABLE LIST FIELDS --- */
+.results table td.column-price, .results table td.column-stock {
+    padding-top: 15px !important;
+    padding-bottom: 15px !important;
+    vertical-align: middle !important;
+}
+
+/* Base styling for Numeric Inputs as Mini-Widgets */
+.results table input[type="number"] {
+    border: 1px solid rgba(139, 61, 48, 0.15) !important;
+    border-radius: 20px !important; /* Pill shape */
+    padding: 6px 14px !important;
+    max-width: 90px !important;
+    font-weight: 700 !important;
+    font-family: 'Inter', sans-serif !important;
+    color: var(--diffiori-brown) !important;
+    background: #ffffff !important;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.03) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    text-align: center;
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+    appearance: textfield; /* Standard property */
+}
+
+/* Hide spin buttons for cleaner look */
+.results table input[type="number"]::-webkit-outer-spin-button,
+.results table input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.results table input[type="number"]:hover {
+    border-color: rgba(139, 61, 48, 0.4) !important;
+    background-color: #fff !important;
+}
+
+.results table input[type="number"]:focus {
+    border-color: var(--diffiori-red) !important;
+    box-shadow: 0 0 0 4px rgba(139, 61, 48, 0.08) !important;
+    outline: none !important;
+    transform: scale(1.05);
+}
+
+/* Special Case: Stock Visual Feedback */
+.results table td.column-stock input {
+    background-color: #fcfaf7 !important;
+}
+
+/* Stock Intensity Warnings via CSS attribute targeting if possible, 
+   otherwise just general high-end look */
+.results table td.column-stock input[value="0"],
+.results table td.column-stock input[value^="-"] {
+    color: #cc0000 !important;
+    border-color: rgba(204, 0, 0, 0.2) !important;
+    background-color: #fff5f5 !important;
+}
+
+/* Beautiful Price Prefix */
+.results table td.column-price div:before {
+    content: "$";
+    position: relative;
+    left: 20px;
+    font-weight: 700;
+    color: var(--diffiori-red);
+    opacity: 0.5;
+    pointer-events: none;
+}
+.results table td.column-price input {
+    padding-left: 20px !important;
+}
+
+/* Modern Toggle Switches for Boolean Fields */
+.results table td:not(.action-checkbox) input[type="checkbox"] {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    width: 44px !important;
+    height: 22px !important;
+    background-color: rgba(139, 61, 48, 0.1) !important;
+    border: 1.5px solid rgba(139, 61, 48, 0.15) !important;
+    border-radius: 20px !important;
+    position: relative !important;
+    cursor: pointer !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    vertical-align: middle !important;
+    outline: none !important;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.02) !important;
+}
+
+.results table td:not(.action-checkbox) input[type="checkbox"]:checked {
+    background-color: var(--diffiori-red) !important;
+    border-color: var(--diffiori-red) !important;
+}
+
+.results table td:not(.action-checkbox) input[type="checkbox"]::before {
+    content: "" !important;
+    position: absolute !important;
+    top: 2px !important;
+    left: 2px !important;
+    width: 15px !important;
+    height: 15px !important;
+    background-color: white !important;
+    border-radius: 50% !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+}
+
+.results table td:not(.action-checkbox) input[type="checkbox"]:checked::before {
+    left: 24px !important;
+    transform: scale(1.1) !important;
+}
+
+.results table td:not(.action-checkbox) input[type="checkbox"]:hover {
+    transform: scale(1.05) !important;
+    border-color: rgba(139, 61, 48, 0.3) !important;
+}
+
+.results table td:not(.action-checkbox) input[type="checkbox"]:focus {
+    box-shadow: 0 0 0 4px rgba(139, 61, 48, 0.1) !important;
+}
+
+/* Table Enhancements */
+.results table th {
+    background-color: rgba(74, 32, 26, 0.02) !important;
+    border-bottom: 2px solid rgba(139, 61, 48, 0.1) !important;
+}
+
+.results table tbody tr {
+    transition: background-color 0.2s ease !important;
+}
+
+.results table tbody tr:hover {
+    background-color: rgba(245, 242, 235, 0.7) !important;
+}
+
+/* Center everything in the list cells and inline cells */
+.results table td, .inline-group table td {
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+
+/* --- GLOBAL REFINEMENT FOR EDITABLE FIELDS (TEXT, SELECT, NUMBER) --- */
+.results table td input[type="text"], 
+.results table td input[type="number"], 
+.results table td select,
+.inline-group table td input[type="text"], 
+.inline-group table td input[type="number"], 
+.inline-group table td select {
+    border: 1px solid rgba(139, 61, 48, 0.15) !important;
+    border-radius: 20px !important;
+    padding: 6px 14px !important;
+    font-weight: 700 !important;
+    font-family: 'Inter', sans-serif !important;
+    color: var(--diffiori-brown) !important;
+    background: #ffffff !important;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.02) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    text-align: center;
+    text-align-last: center; /* For selects */
+    display: inline-block !important;
+    max-width: 100% !important;
+}
+
+.results table td select, .inline-group table td select {
+    padding-right: 30px !important;
+    cursor: pointer;
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%238B3D30' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: calc(100% - 12px) center !important;
+    background-color: #ffffff !important;
+}
+
+/* Exception for left-aligned primary columns like Name/Title if needed, 
+   but for now following user request to center everything editable */
+/* --- INLINE ADD/REMOVE MINIMALIST ICONS (MATCHING REFERENCE) --- */
+
+/* Add Row Button -> Brown Circle Plus Ultra-Compact */
+.inline-group .add-row a, 
+.js-inline-admin-formset .add-row a,
+#variants-group .add-row a {
+    background-color: var(--diffiori-brown) !important;
+    color: white !important;
+    width: 24px !important; /* Ultra small */
+    height: 24px !important; 
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 0 !important;
+    padding: 0 !important;
+    margin: 10px auto !important; 
+    box-shadow: 0 2px 5px rgba(74, 32, 26, 0.15) !important;
+    transition: all 0.2s ease !important;
+    border: none !important;
+    text-decoration: none !important;
+}
+
+.inline-group .add-row a:hover,
+#variants-group .add-row a:hover {
+    transform: scale(1.1) rotate(90deg) !important;
+    background-color: var(--diffiori-brown-hover) !important;
+}
+
+.inline-group .add-row a::before,
+#variants-group .add-row a::before {
+    content: "\f067" !important;
+    font-family: "Font Awesome 5 Free" !important;
+    font-weight: 900 !important;
+    font-size: 0.7rem !important; /* Smaller icon */
+}
+
+/* Remove Row -> Red Square Trash Button Ultra-Compact */
+.inline-group .delete a,
+.js-inline-admin-formset .delete a,
+#variants-group .delete a {
+    font-size: 0 !important;
+    background-color: var(--diffiori-red) !important;
+    color: white !important;
+    width: 22px !important; /* Tiny */
+    height: 22px !important; 
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 4px !important;
+    margin: 0 auto !important;
+    box-shadow: 0 2px 4px rgba(139, 61, 48, 0.1) !important;
+    transition: all 0.2s ease !important;
+    text-decoration: none !important;
+}
+
+.inline-group .delete a:hover,
+#variants-group .delete a:hover {
+    background-color: #A04A3A !important;
+    transform: scale(1.1) !important;
+    box-shadow: 0 6px 12px rgba(139, 61, 48, 0.3) !important;
+}
+
+.inline-group .delete a::before,
+#variants-group .delete a::before {
+    content: "\f2ed" !important;
+    font-family: "Font Awesome 5 Free" !important;
+    font-weight: 900 !important;
+    font-size: 1.1rem !important;
+    color: white !important;
+}
+
+/* Hide the default checkbox if it exists near the delete link */
+.inline-group td.delete input[type="checkbox"],
+#variants-group td.delete input[type="checkbox"] {
+    display: none !important;
+}
+
+.inline-group table thead th.column-delete,
+#variants-group table thead th.column-delete {
+    width: 60px !important;
+    text-align: center !important;
+}

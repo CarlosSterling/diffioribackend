@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  db-viva:               # ← nombre visible en “docker ps”
+    image: postgres:15
+    container_name: db-viva
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: vivatech
+      POSTGRES_PASSWORD: vivatech
+      POSTGRES_DB: vivatech
+      TZ: America/Bogota
+    ports:
+      - "5432:5432"      # accede desde host → localhost:5432
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:

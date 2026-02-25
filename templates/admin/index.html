@@ -1,0 +1,71 @@
+{% extends "admin/index.html" %}
+{% load dashboard_metrics %}
+
+{% block content %}
+    {% get_dashboard_metrics as metrics %}
+    
+    <div class="row mb-4 mt-2">
+        <!-- Tarjeta de Productos (ROJO) -->
+        <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box bg-white shadow-sm" style="border-radius: 12px; border: 1px solid rgba(139, 61, 48, 0.08);">
+                <span class="info-box-icon" style="background-color: #fdf4f2; color: #8B3D30; border-radius: 10px; margin: 0.5rem;"><i class="fas fa-mug-hot"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text text-uppercase font-weight-bold" style="letter-spacing: 0.8px; font-size: 0.7rem; color: var(--diffiori-brown); opacity: 0.8;">Catálogo</span>
+                    <span class="info-box-number" style="font-size: 1.6rem; color: #8B3D30 !important; font-weight: 800;">{{ metrics.products_active }}</span>
+                    <div class="progress" style="height: 3px; background-color: rgba(139, 61, 48, 0.05);">
+                        <div class="progress-bar" style="width: 100%; background-color: #8B3D30 !important;"></div>
+                    </div>
+                    <span class="progress-description" style="font-size: 0.65rem; color: var(--diffiori-brown); opacity: 0.6;">{{ metrics.products_inactive }} agotados</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tarjeta de Clientes (VERDE) -->
+        <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box bg-white shadow-sm" style="border-radius: 12px; border: 1px solid rgba(45, 106, 79, 0.08);">
+                <span class="info-box-icon" style="background-color: #e8f3ee; color: #2D6A4F; border-radius: 10px; margin: 0.5rem;"><i class="fas fa-users"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text text-uppercase font-weight-bold" style="letter-spacing: 0.8px; font-size: 0.7rem; color: var(--diffiori-brown); opacity: 0.8;">Comunidad</span>
+                    <span class="info-box-number" style="font-size: 1.6rem; color: #2D6A4F !important; font-weight: 800;">{{ metrics.clients_active }}</span>
+                    <div class="progress" style="height: 3px; background-color: rgba(45, 106, 79, 0.05);">
+                        <div class="progress-bar" style="width: 100%; background-color: #2D6A4F !important;"></div>
+                    </div>
+                    <span class="progress-description" style="font-size: 0.65rem; color: var(--diffiori-brown); opacity: 0.6;">Clientes registrados</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tarjeta de Blog (ORO) -->
+        <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box bg-white shadow-sm" style="border-radius: 12px; border: 1px solid rgba(197, 160, 89, 0.08);">
+                <span class="info-box-icon" style="background-color: #faf6eb; color: #C5A059; border-radius: 10px; margin: 0.5rem;"><i class="fas fa-pen-nib"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text text-uppercase font-weight-bold" style="letter-spacing: 0.8px; font-size: 0.7rem; color: var(--diffiori-brown); opacity: 0.8;">Artículos</span>
+                    <span class="info-box-number" style="font-size: 1.6rem; color: #C5A059 !important; font-weight: 800;">{{ metrics.blog_published }}</span>
+                    <div class="progress" style="height: 3px; background-color: rgba(197, 160, 89, 0.05);">
+                        <div class="progress-bar" style="width: 100%; background-color: #C5A059 !important;"></div>
+                    </div>
+                    <span class="progress-description" style="font-size: 0.65rem; color: var(--diffiori-brown); opacity: 0.6;">Entradas publicadas</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tarjeta de Contenido Visual (MARRÓN) -->
+        <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box bg-white shadow-sm" style="border-radius: 12px; border: 1px solid rgba(74, 32, 26, 0.08);">
+                <span class="info-box-icon" style="background-color: #f4efee; color: #4a201a; border-radius: 10px; margin: 0.5rem;"><i class="fas fa-camera"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text text-uppercase font-weight-bold" style="letter-spacing: 0.8px; font-size: 0.7rem; color: var(--diffiori-brown); opacity: 0.8;">Multimedia</span>
+                    <span class="info-box-number" style="font-size: 1.6rem; color: #4a201a !important; font-weight: 800;">{{ metrics.total_images }}</span>
+                    <div class="progress" style="height: 3px; background-color: rgba(74, 32, 26, 0.05);">
+                        <div class="progress-bar" style="width: 100%; background-color: #4a201a !important;"></div>
+                    </div>
+                    <span class="progress-description" style="font-size: 0.65rem; color: var(--diffiori-brown); opacity: 0.6;">Total de imágenes</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Render the standard Jazzmin dashboard below our custom cards -->
+    {{ block.super }}
+{% endblock %}
