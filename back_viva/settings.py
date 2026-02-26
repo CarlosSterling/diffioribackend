@@ -51,6 +51,8 @@ LOCAL_APPS = [
     "apps.clients",
     "apps.blog",
     "apps.core",
+    "apps.orders.apps.OrdersConfig",
+    "apps.users.apps.UsersConfig",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY + LOCAL_APPS
@@ -70,7 +72,11 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-CORS_ALLOW_ALL_ORIGINS = True
+# Eliminado: CORS_ALLOW_ALL_ORIGINS = True (Riesgo de seguridad Crítico)
+CORS_ALLOWED_ORIGINS = os.environ.get(
+    "CORS_ALLOWED_ORIGINS",
+    "http://localhost:3000,http://127.0.0.1:3000,http://localhost:8080"
+).split(",")
 
 ROOT_URLCONF = "back_viva.urls"
 
@@ -91,6 +97,9 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "back_viva.wsgi.application"
+
+# ─── Custom User Model ───
+AUTH_USER_MODEL = "users.User"
 
 # ────────────────────────────────────────────────────────────
 # Base de datos

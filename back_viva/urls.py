@@ -21,6 +21,7 @@ urlpatterns = [
     path("api/posts/", include("apps.blog.api.router")),
     path("api/faqs/", include("apps.core.api.router")),
     path("api/content/", include("apps.content.urls")),
+    path("api/orders/", include("apps.orders.api.router")),
 ]
 
 # Servir media y static en DEBUG
