@@ -5,6 +5,8 @@ from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
+from apps.core.emails import send_order_confirmation, notify_admin_new_order
+
 
 from ..models import Order, OrderItem
 from .serializers import OrderSerializer, CheckoutSerializer
@@ -103,6 +105,10 @@ class OrderViewSet(viewsets.GenericViewSet):
                     order.payment_reference = "SIMULATED-PAYMENT-FAILURE"
             
             order.save()
+            
+            if order.status == 'PAID':
+                send_order_confirmation(order)
+                notify_admin_new_order(order)
 
             # TODO: LLAMAR A LA API COMERCIAL DE PAGOS PARA CREAR SESIÓN 
             payment_url = "https://checkout.sandbox.gateway.com/"
@@ -144,6 +150,10 @@ class OrderViewSet(viewsets.GenericViewSet):
                 order.status = 'PAID'
                 order.payment_reference = request.data.get("transaction_id")
                 order.save()
+                
+                # Notificar a ambos
+                send_order_confirmation(order)
+                notify_admin_new_order(order)
             except Order.DoesNotExist:
                 pass
 

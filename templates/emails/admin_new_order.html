@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #fafafa; margin: 0; padding: 20px; }
+        .alert-box { max-width: 600px; background: white; margin: 0 auto; border-radius: 12px; border: 1px solid #e1e1e1; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .alert-header { background-color: #4A3728; color: #E8D4B0; padding: 20px; text-align: center; }
+        .alert-header h1 { margin: 0; font-size: 18px; text-transform: uppercase; letter-spacing: 2px; }
+        
+        .alert-body { padding: 30px; }
+        .order-badge { display: inline-block; padding: 4px 10px; background: #C5A059; color: white; border-radius: 4px; font-weight: bold; font-size: 14px; margin-bottom: 20px; }
+        
+        .customer-card { background: #f8f9fa; border-radius: 8px; padding: 20px; margin-bottom: 25px; border-left: 4px solid #4A3728; }
+        .customer-card h3 { margin: 0 0 10px 0; font-size: 13px; color: #888; text-transform: uppercase; }
+        .customer-card p { margin: 5px 0; color: #333; font-size: 15px; }
+
+        .items-table { width: 100%; border-collapse: collapse; margin-bottom: 25px; }
+        .items-table th { text-align: left; font-size: 11px; color: #aaa; text-transform: uppercase; padding: 10px 0; border-bottom: 1px solid #eee; }
+        .items-table td { padding: 12px 0; border-bottom: 1px solid #f5f5f5; vertical-align: top; }
+        
+        .item-name { font-weight: bold; color: #4A3728; font-size: 14px; }
+        .item-meta { font-size: 12px; color: #777; margin-top: 2px; }
+        .item-qty { font-weight: bold; color: #555; }
+        .item-price { text-align: right; color: #333; font-weight: 500; }
+
+        .summary-total { text-align: right; padding-top: 20px; border-top: 2px solid #eee; }
+        .summary-total span { font-size: 24px; font-weight: 900; color: #1e8e3e; }
+
+        .admin-footer { padding: 20px; text-align: center; background: #fcfcfc; border-top: 1px solid #eee; }
+        .admin-footer a { color: #4A3728; text-decoration: underline; font-size: 14px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="alert-box">
+        <div class="alert-header">
+            <h1>Nueva Venta Recibida</h1>
+        </div>
+        <div class="alert-body">
+            <div class="order-badge">Pedido #{{ order.id }}</div>
+            
+            <div class="customer-card">
+                <h3>Datos del Cliente</h3>
+                <p><strong>Nombre:</strong> {{ order.contact_name }}</p>
+                <p><strong>Email:</strong> {{ order.contact_email }}</p>
+                <p><strong>WhatsApp:</strong> {{ order.contact_phone }}</p>
+                <p><strong>Dirección:</strong> {{ order.shipping_address }}</p>
+            </div>
+
+            <table class="items-table">
+                <thead>
+                    <tr>
+                        <th width="70%">Producto</th>
+                        <th width="10%" style="text-align: center;">Cant.</th>
+                        <th width="20%" style="text-align: right;">Precio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in order.items.all %}
+                    <tr>
+                        <td>
+                            <div class="item-name">{{ item.product_name }}</div>
+                            <div class="item-meta">
+                                {% if item.product_variant %}
+                                    {{ item.product_variant.weight }} - {{ item.product_variant.grind }}
+                                {% else %}
+                                    Estandar
+                                {% endif %}
+                            </div>
+                        </td>
+                        <td style="text-align: center;" class="item-qty">{{ item.quantity }}</td>
+                        <td class="item-price">${{ item.price_at_purchase }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="summary-total">
+                <p style="margin:0; font-size: 12px; color: #999; text-transform: uppercase; font-weight: bold;">Monto Total Cobrado</p>
+                <span>${{ order.total_amount }} COP</span>
+            </div>
+        </div>
+        <div class="admin-footer">
+            <a href="http://localhost:8080/admin/orders/order/{{ order.id }}/change/">Ver detalle completo en el Admin</a>
+        </div>
+    </div>
+</body>
+</html>
