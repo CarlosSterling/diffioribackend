@@ -1,0 +1,1642 @@
+/* admin_custom_v1.css - Exact Frontend Theme Mapping */
+:root {
+  --diffiori-beige: #F2F2F2; 
+  --diffiori-brown: #1a1a1a; /* Replaced Coffee with Graphite Grey */
+  --diffiori-brown-hover: #333333; 
+  --diffiori-gold: #C5A059;
+  --diffiori-gold-hover: #b08d45;
+  --diffiori-gray-dark: #343a40;
+  --diffiori-gray-light: #6c757d;
+  --diffiori-cream: #FFFFFF;
+  --bg-card: #FFFFFF;
+}
+
+/* Base Body & Layout */
+body, .content-wrapper, .wrapper {
+    background-color: var(--diffiori-beige) !important;
+    color: var(--diffiori-brown) !important;
+    font-family: 'Inter', system-ui, sans-serif !important;
+}
+
+/* Typography Overrides */
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, label, th {
+    color: var(--diffiori-brown) !important;
+}
+
+/* Sidebar Overrides - Graphite Theme with Geometric Pattern */
+.main-sidebar, .sidebar-dark-primary {
+    background: linear-gradient(to bottom, #1a1a1a, #000000) !important;
+    border-right: none !important;
+    position: relative;
+}
+
+.main-sidebar::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M15 2L28 15L15 28L2 15Z' fill='none' stroke='%23ffffff' stroke-width='0.5' opacity='0.03'/%3E%3Cpath d='M15 7L23 15L15 23L7 15Z' fill='none' stroke='%23ffffff' stroke-width='0.3' opacity='0.01'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Sidebar Brand / Logo Area */
+.brand-link {
+    background-color: transparent !important;
+    border-bottom: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 1.5rem 1rem !important; /* Fixed padding for brand */
+    min-height: 80px !important;
+}
+.sidebar .nav-sidebar {
+    margin-top: 4rem !important; /* Separates Panel from the logo line */
+}
+/* Specifically target the Dashboard item to add space below it */
+.nav-sidebar > .nav-item:first-child {
+    margin-bottom: 0.5rem !important; /* Keeps INICIO close to Panel */
+}
+.brand-text, .brand-link span {
+    display: none !important;
+}
+.brand-image {
+    float: none !important;
+    max-height: 60px !important; 
+    width: auto !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    mix-blend-mode: screen !important; /* Filters out the dark parts of the JPG */
+    clip-path: circle(50%) !important; /* Cuts off the square corners of the image */
+    filter: brightness(1.1) contrast(1.1) !important;
+    opacity: 1 !important;
+}
+
+/* Global Avatar Override - Hide default icons / broken images */
+.user-panel .image img, .user-panel .image i, .nav-link .user-image, .nav-link i.fa-user, .nav-link i.fa-user-circle {
+    display: none !important;
+}
+
+/* Hide the redundant logo image in user-panel if it exists */
+.user-panel .image::before {
+    display: none !important;
+}
+
+/* Specific sizing for the top navbar avatar to keep it balanced */
+.nav-item.dropdown.user-menu > a::before {
+    content: '';
+    display: inline-block;
+    width: 2.5rem;
+    height: 1.2rem;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+    background-color: var(--diffiori-beige);
+    -webkit-mask-image: url('../img/logoDiffiori.png');
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: left center;
+    mask-image: url('../img/logoDiffiori.png');
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: left center;
+}
+
+/* Ensure row action links are white inside dark buttons */
+.object-tools .addlink, .viewsitelink, .changelink,
+a.addlink, a.changelink, a.viewsitelink,
+.app-list a.btn, .table a.btn {
+    color: #ffffff !important;
+}
+
+/* User panel (Sidebar) - Hidden as requested to move to top right */
+.user-panel {
+    display: none !important;
+}
+
+/* Sidebar App Headers (Inicio, Tienda, etc) */
+.nav-header {
+    color: var(--diffiori-cream) !important;
+    opacity: 0.8 !important;
+    font-weight: 800 !important;
+    text-transform: uppercase;
+    font-size: 0.85rem !important; /* Larger headers */
+    letter-spacing: 1.5px;
+    padding: 2rem 1rem 1rem 1.5rem !important;
+    white-space: normal !important;
+    line-height: 1.4 !important;
+}
+
+/* Sidebar Navigation Items - No expansion on hover */
+
+.sidebar-dark-primary .nav-sidebar .nav-item > .nav-link {
+    color: var(--diffiori-beige) !important; /* Full brand beige for clarity */
+    border-radius: 0.5rem !important;
+    margin: 0.2rem 0.8rem !important;
+    font-weight: 500 !important;
+    padding: 0.6rem 1rem !important;
+    transition: all 0.2s ease;
+}
+
+/* Improve icon spacing and text truncation */
+.nav-sidebar .nav-link > i {
+    margin-right: 1rem !important;
+    font-size: 1.3rem !important; /* Larger icons */
+    width: 2rem !important;
+    text-align: center !important;
+}
+
+.nav-sidebar .nav-link p {
+    margin-bottom: 0 !important;
+}
+
+/* Hover visibility removed as requested */
+/* .main-sidebar:hover .nav-sidebar .nav-link p {
+    text-overflow: unset !important;
+} */
+
+.sidebar-dark-primary .nav-sidebar .nav-item > .nav-link:hover {
+    background-color: rgba(255,255,255,0.05) !important;
+    color: #ffffff !important;
+}
+
+/* Refined Active State (Graphite highlight - KILL BLUE) */
+.nav-pills .nav-link.active,
+.nav-sidebar .nav-item > .nav-link.active,
+[class*="sidebar-dark-"] .nav-sidebar > .nav-item > .nav-link.active,
+.sidebar-dark-primary .nav-sidebar .nav-item > .nav-link.active {
+    background: #333333 !important; /* Graphite */
+    background-color: #333333 !important;
+    color: #ffffff !important;
+    border-left: none !important;
+    border-radius: 0.5rem !important;
+    margin: 0.2rem 0.8rem !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Ensure no blue on hover/focus */
+.nav-sidebar .nav-item > .nav-link:focus,
+.nav-sidebar .nav-item > .nav-link:active {
+    background: #333333 !important;
+    color: #ffffff !important;
+}
+
+[class*="sidebar-dark-"] .nav-sidebar > .nav-item > .nav-link.active i,
+.sidebar-dark-primary .nav-sidebar .nav-item > .nav-link.active i {
+    color: #ffffff !important;
+}
+
+/* --- COLLAPSED SIDEBAR (MINI) FIXES --- */
+/* Fixed width ONLY when collapsed and NOT hovered */
+body.sidebar-collapse:not(.sidebar-no-expand) .main-sidebar:not(:hover) {
+    width: 73px !important;
+}
+
+body.sidebar-collapse:not(.sidebar-no-expand) .main-sidebar:not(:hover)::before {
+    width: 73px !important;
+}
+
+/* Allow natural expansion on hover */
+.sidebar-mini.sidebar-collapse .main-sidebar:hover {
+    width: 250px !important;
+    transition: width 0.3s ease-in-out !important;
+}
+
+/* Ensure content area margin stays at 73px when collapsed */
+body.sidebar-collapse .content-wrapper,
+body.sidebar-collapse .main-footer,
+body.sidebar-collapse .main-header {
+    margin-left: 73px !important;
+    transition: margin-left 0.3s ease-in-out !important;
+}
+
+/* Logo handling in collapsed vs expanded */
+body.sidebar-collapse .brand-link {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    overflow: hidden !important;
+    transition: all 0.3s ease !important;
+}
+
+/* Small logo when collapsed */
+body.sidebar-collapse .main-sidebar:not(:hover) .brand-image {
+    max-height: 40px !important;
+    clip-path: circle(50%) !important;
+    margin: 0 auto !important;
+}
+
+/* Full logo when expanded or hovered */
+.main-sidebar:hover .brand-image,
+body:not(.sidebar-collapse) .brand-image {
+    max-height: 60px !important;
+    clip-path: circle(50%) !important;
+}
+
+/* Icons always centered when collapsed */
+body.sidebar-collapse .nav-sidebar .nav-link i {
+    margin-right: 0;
+    width: 100%;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+/* Icons shift left when hovered to make room for text */
+.main-sidebar:hover .nav-sidebar .nav-link i {
+    margin-right: 0.5rem !important;
+    width: 1.6rem !important;
+    text-align: center !important;
+}
+
+/* Text visibility logic */
+body.sidebar-collapse .nav-sidebar .nav-link p {
+    opacity: 0;
+    display: none;
+}
+
+/* Show text when the sidebar is being hovered */
+.main-sidebar:hover .nav-sidebar .nav-link p {
+    display: inline-block !important;
+    opacity: 1 !important;
+    margin-left: 10px !important;
+    white-space: nowrap !important;
+    transition: opacity 0.3s ease !important;
+}
+
+/* Fix active selector padding */
+body.sidebar-collapse .nav-sidebar .nav-item > .nav-link.active {
+    margin: 0.2rem 0.6rem !important;
+    padding: 0.6rem 0 !important;
+}
+
+.main-sidebar:hover .nav-sidebar .nav-item > .nav-link.active {
+    padding: 0.6rem 1rem !important;
+    margin: 0.2rem 0.8rem !important;
+}
+
+/* Navbar top */
+.main-header.navbar-white.navbar-light {
+    background-color: var(--diffiori-beige) !important;
+    border-bottom: 1px solid rgba(51, 51, 51, 0.1) !important;
+}
+
+/* Navbar Links */
+.main-header.navbar-light .navbar-nav .nav-link {
+    color: var(--diffiori-brown) !important;
+    font-weight: 600 !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+}
+.main-header.navbar-light .navbar-nav .nav-link:hover {
+    color: var(--diffiori-gold) !important;
+}
+
+/* Move Admin Profile and Icons to the Right (Navbar) */
+.main-header .navbar-nav.ml-auto {
+    display: flex !important;
+    align-items: center !important;
+}
+
+.main-header .navbar-nav.ml-auto .nav-item .nav-link {
+    color: var(--diffiori-brown) !important;
+    display: flex !important;
+    align-items: center !important;
+    padding: 0.5rem 1rem !important;
+}
+
+/* Style ALL icons in the top right navbar to be GOLD and Visible */
+.main-header .navbar-nav.ml-auto .nav-item .nav-link i,
+.main-header .navbar-nav.ml-auto .nav-item .nav-link::before,
+.main-header .navbar-nav.ml-auto .nav-item .nav-link p i {
+    color: var(--diffiori-gold) !important;
+    font-size: 1.4rem !important;
+    visibility: visible !important;
+    display: inline-block !important;
+    opacity: 1 !important;
+    margin-right: 5px !important;
+}
+
+/* Specific fix for the user-menu icon */
+.user-menu .nav-link span, 
+.user-menu .nav-link .d-none.d-md-inline {
+    display: none !important; /* Hide text, we want only the icon */
+}
+
+.user-menu .nav-link::before {
+    content: "\f2bd" !important; /* User circle */
+    font-family: "Font Awesome 5 Free" !important;
+    font-weight: 900 !important;
+    color: var(--diffiori-gold) !important;
+}
+
+/* If using an img, we'll give it a red border as a fallback */
+.user-menu .nav-link img.user-image {
+    border: 2px solid var(--diffiori-gold) !important;
+    display: inline-block !important;
+    width: 30px !important;
+    height: 30px !important;
+}
+
+/* Fix Blue Links */
+a {
+    color: var(--diffiori-gold) !important;
+    transition: color 0.2s ease;
+}
+a:hover {
+    color: var(--diffiori-brown-hover) !important;
+}
+
+/* Base body tweaks */
+body {
+    background-color: var(--diffiori-beige) !important;
+}
+
+/* Fix Cards */
+.content-wrapper {
+    background-color: var(--diffiori-beige) !important;
+}
+.card {
+    background-color: var(--bg-card) !important;
+    border: none !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+    overflow: hidden;
+}
+.card-header {
+    background-color: transparent !important;
+    border-bottom: 1px solid rgba(0,0,0,0.05) !important;
+}
+
+/* Clearer Tabs for inner forms */
+.nav-tabs {
+    border-bottom: 2px solid rgba(0,0,0,0.05) !important;
+    margin-bottom: 1rem !important;
+}
+.nav-tabs .nav-link {
+    color: var(--diffiori-brown) !important;
+    font-weight: 500 !important;
+    border: none !important;
+    border-bottom: 2px solid transparent !important;
+    background: transparent !important;
+    padding: 0.75rem 1.5rem !important;
+    margin-right: 0.5rem !important;
+    transition: all 0.2s ease !important;
+}
+.nav-tabs .nav-link:hover {
+    color: var(--diffiori-gold) !important;
+    background-color: rgba(0,0,0,0.02) !important;
+    border-radius: 6px 6px 0 0 !important;
+}
+.nav-tabs .nav-link.active {
+    color: var(--diffiori-gold) !important;
+    font-weight: 700 !important;
+    border-bottom: 2px solid var(--diffiori-gold) !important;
+    background-color: transparent !important;
+}
+
+/* Cards & Info Boxes */
+.card, .info-box {
+    background-color: var(--bg-card) !important;
+    border: none !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.04) !important;
+}
+
+.card-header {
+    border-bottom: 1px solid rgba(51, 51, 51, 0.05) !important;
+    background-color: transparent !important;
+    padding: 1.5rem 1.75rem !important;
+}
+
+/* Breadcrumbs & Page Titles */
+.breadcrumb {
+    font-size: 0.9rem !important;
+    padding: 0.8rem 0 !important;
+    background: transparent !important;
+}
+.content-header h1 {
+    font-size: 1.8rem !important;
+    font-weight: 800 !important;
+    color: var(--diffiori-brown) !important;
+}
+
+/* Action Buttons (Añadir Producto, etc) */
+.object-tools a {
+    background: linear-gradient(135deg, #C5A059 0%, #b08d45 100%) !important;
+    color: #ffffff !important;
+    padding: 0.6rem 1.4rem !important;
+    font-size: 0.85rem !important;
+    font-weight: 800 !important;
+    border-radius: 12px !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 10px rgba(197, 160, 89, 0.2) !important;
+    transition: all 0.3s ease !important;
+}
+.object-tools a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(197, 160, 89, 0.3) !important;
+    color: #ffffff !important;
+}
+
+/* GLOBAL LINKS (Fixing the default blue) */
+a {
+    color: var(--diffiori-gold);
+    text-decoration: none;
+}
+a:hover {
+    color: var(--diffiori-brown);
+}
+
+/* Fixing Table links specifically */
+table.dataTable tbody tr td a, .table td a {
+    color: var(--diffiori-brown) !important;
+    font-weight: 600;
+}
+table.dataTable tbody tr td a:hover, .table td a:hover {
+    color: var(--diffiori-gold) !important;
+}
+
+/* Table Headers (Fix bright blue sorting text) */
+table.dataTable thead th, .table th, table.dataTable thead th a {
+    color: var(--diffiori-brown) !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid rgba(51, 51, 51, 0.1) !important;
+}
+
+/* Alerts / Success Messages */
+.alert-success {
+    background-color: #E8F3EE !important; /* Soft green */
+    color: #2D6A4F !important; /* Dark green text */
+    border: 1px solid #B7E4C7 !important;
+    border-radius: 8px !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02) !important;
+}
+.alert-success a {
+    color: #1a4f38 !important;
+    font-weight: 700 !important;
+}
+
+/* Buttons */
+/* Base Buttons - Ultra Compact */
+.btn-primary, .btn-success, .btn-info, input[type="submit"] {
+    background: linear-gradient(135deg, #C5A059 0%, #b08d45 100%) !important;
+    border: none !important;
+    color: #ffffff !important;
+    border-radius: 12px !important;
+    font-weight: 800 !important;
+    padding: 0.6rem 1.2rem !important; /* More generous padding */
+    font-size: 0.85rem !important; /* Standard elite size */
+    text-transform: uppercase;
+    letter-spacing: 1.2px !important;
+    box-shadow: 0 4px 10px rgba(197, 160, 89, 0.2) !important;
+    transition: all 0.3s ease !important;
+    min-height: 38px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* Base Buttons */
+.btn, button, input[type="submit"], input[type="button"] {
+    border-radius: 6px !important;
+    font-weight: 500 !important;
+    transition: all 0.2s ease !important;
+    color: #ffffff !important; /* Force white text */
+}
+
+/* Primary btn overrides - Better consistency */
+.btn-primary, .btn-info, .btn-success {
+    font-size: 0.85rem !important;
+    padding: 0.6rem 1.4rem !important;
+}
+.btn-primary:hover, .btn-info:hover, .btn-success:hover {
+    background: linear-gradient(135deg, #b08d45 0%, #a07d35 100%) !important;
+    color: #ffffff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(197, 160, 89, 0.3) !important;
+}
+.btn-outline-primary {
+    background-color: transparent !important;
+    color: var(--diffiori-gold) !important;
+    border: 1px solid var(--diffiori-gold) !important;
+    box-shadow: none !important;
+}
+.btn-outline-primary:hover {
+    background-color: var(--diffiori-gold) !important;
+    color: #ffffff !important;
+}
+
+/* Filter / Action bars */
+#changelist-filter {
+    background-color: var(--bg-card) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.04) !important;
+    border: none !important;
+}
+#changelist-filter h2 {
+    background-color: rgba(51, 51, 51, 0.05) !important;
+    color: var(--diffiori-brown) !important;
+    border-radius: 12px 12px 0 0 !important;
+}
+
+/* Forms / Inputs - Professional Rounded */
+.form-control, select:not([multiple]), input[type="text"], input[type="number"], input[type="file"], input[type="password"], input[type="email"] {
+    border-radius: 12px !important;
+    border: 1px solid rgba(74, 55, 40, 0.15) !important;
+    padding: 0.6rem 1rem !important;
+    font-size: 0.95rem !important; 
+    font-weight: 500 !important;
+    transition: all 0.3s ease !important;
+    background-color: #ffffff !important;
+    min-height: 44px !important; /* Professional standard height */
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.02) !important;
+}
+
+/* Expansion for Permissions / Groups multi-select boxes */
+.selector select {
+    height: 300px !important; /* Large enough to see at least 10-15 options */
+    border-radius: 12px !important;
+    padding: 10px !important;
+    font-size: 0.85rem !important;
+}
+
+.selector-available input, .selector-chosen input {
+    height: 28px !important; /* Keep filter inputs small */
+}
+
+.form-control:focus, select:focus, input:focus {
+    border-color: var(--diffiori-gold) !important;
+    box-shadow: 0 0 0 0.15rem rgba(51, 51, 51, 0.1) !important;
+    outline: none !important;
+}
+
+/* Specific fix for file inputs in Django admin */
+input[type="file"] {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+}
+
+/* --- USABILITY ENHANCEMENTS --- */
+
+/* Sticky Save Bar in Change Forms - Compact & Elegant */
+.submit-row {
+    position: sticky !important;
+    bottom: 0 !important;
+    z-index: 1000 !important;
+    background-color: var(--diffiori-beige) !important;
+    padding: 0.4rem 1rem !important; /* Tighter padding */
+    margin: 1rem -1.25rem -1.25rem -1.25rem !important;
+    border-top: 1px solid rgba(51, 51, 51, 0.1) !important;
+    border-radius: 0 0 12px 12px !important;
+    box-shadow: 0 -4px 10px rgba(0,0,0,0.05) !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 6px !important; /* Minimal spacing */
+    justify-content: flex-end !important;
+}
+
+.submit-row input, .submit-row a {
+    margin: 0 !important;
+    min-height: 44px !important; /* Larger professional height */
+    padding: 0 1.8rem !important;
+    font-size: 0.85rem !important;
+    font-weight: 800 !important;
+    text-transform: uppercase;
+    letter-spacing: 1px !important;
+    border-radius: 12px !important; 
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1) !important;
+}
+
+/* Super Aggressive Danger/Cancel button override to kill the RED */
+.btn-danger, 
+.btn-outline-danger,
+.submit-row a.deletelink,
+.submit-row .deletelink a,
+.button.cancel-link,
+a.cancel-link,
+.cancel-link,
+input[value="No, llévame atrás"],
+input[value="Eliminar"],
+.delete-confirmation form input[type="submit"] + a.button {
+    background: #333333 !important; 
+    background-color: #333333 !important;
+    border-color: #333333 !important;
+    color: white !important;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2) !important;
+    transition: all 0.3s ease !important;
+    opacity: 1 !important;
+}
+
+.btn-danger:hover, 
+.btn-outline-danger:hover,
+.submit-row a.deletelink:hover,
+.button.cancel-link:hover,
+a.cancel-link:hover {
+    background: #1a1a1a !important;
+    background-color: #1a1a1a !important;
+    border-color: #1a1a1a !important;
+    color: white !important;
+    transform: translateY(-2px);
+}
+
+.submit-row a.historylink, 
+.submit-row .historylink a,
+.btn-secondary,
+.btn-outline-secondary,
+.btn-info,
+.btn-outline-info {
+    background-color: #5a6268 !important; /* Elegant Charcoal Gray */
+    border-color: #5a6268 !important;
+    color: white !important;
+    box-shadow: 0 4px 8px rgba(90, 98, 104, 0.2) !important;
+    transition: all 0.2s ease !important;
+    opacity: 1 !important;
+    text-shadow: none !important;
+}
+
+.submit-row a.historylink:hover,
+.submit-row .historylink a:hover,
+.btn-secondary:hover,
+.btn-outline-secondary:hover {
+    background-color: #495057 !important;
+    border-color: #495057 !important;
+    color: white !important;
+    transform: translateY(-1px);
+}
+
+/* Status Badges for Boolean Fields in List Views */
+.field-is_active i.fa-check-circle, .field-is_published i.fa-check-circle {
+    background-color: #E8F3EE !important;
+    color: #2D6A4F !important;
+    padding: 2px 8px !important;
+    border-radius: 20px !important;
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
+}
+
+.field-is_active i.fa-times-circle, .field-is_published i.fa-times-circle {
+    background-color: #e9ecef !important; /* Neutral light gray */
+    color: #495057 !important;
+    padding: 2px 8px !important;
+    border-radius: 20px !important;
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
+}
+
+/* Improve Table Row Hover */
+.table hover tbody tr:hover {
+    background-color: rgba(51, 51, 51, 0.03) !important;
+}
+
+/* --- HIGH-END ELEGANT LOGIN & LOGOUT --- */
+
+/* --- LUXURY BOUTIQUE LOGIN (V3 - ARCHITECTURAL SPLIT) --- */
+:root {
+    --luxe-graphite: #1a1a1a;
+    --luxe-gold: #C5A059;
+    --luxe-bg: #fdfdfd;
+    --serif-font: 'Playfair Display', serif;
+    --sans-font: 'Montserrat', sans-serif;
+}
+
+.login-page-custom {
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 100vh !important;
+    width: 100vw !important;
+    overflow: hidden !important;
+    background: var(--luxe-bg) !important;
+    font-family: var(--sans-font) !important;
+}
+
+.login-split-main {
+    display: flex !important;
+    height: 100vh !important;
+    width: 100vw !important;
+}
+
+/* LEFT SIDE: THE BRAND SANCTUARY (REFINED MATTE) */
+.brand-showcase {
+    flex: 0 0 55% !important; /* Perfect balance */
+    height: 100% !important;
+    background: #0a0a0a !important; /* Deep Matte Graphite */
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    z-index: 2 !important;
+    overflow: hidden !important;
+    border-right: 1px solid rgba(255,255,255,0.03) !important;
+}
+
+.brand-visual-overlay {
+    display: none !important; /* No longer needed for image */
+}
+
+/* Artisanal Coffee Bean Pattern (Boutique Specialty) */
+.brand-showcase::after {
+    content: '';
+    position: absolute !important;
+    inset: 0 !important;
+    background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23C5A059' stroke-width='0.7' opacity='0.07'%3E%3Cellipse cx='20' cy='20' rx='6' ry='10' transform='rotate(25, 20, 20)'/%3E%3Cpath d='M19 14Q22 20 19 26' transform='rotate(25, 20, 20)'/%3E%3Cellipse cx='60' cy='50' rx='5' ry='9' transform='rotate(-15, 60, 50)'/%3E%3Cpath d='M59 45Q62 50 59 55' transform='rotate(-15, 60, 50)'/%3E%3Cellipse cx='30' cy='65' rx='4' ry='7' transform='rotate(10, 30, 65)'/%3E%3Cpath d='M29 61Q32 65 29 69' transform='rotate(10, 30, 65)'/%3E%3C/g%3E%3C/svg%3E") !important;
+    background-size: 100px 100px !important;
+    z-index: 1 !important;
+    pointer-events: none !important;
+}
+
+.brand-content-v3 {
+    position: relative !important;
+    z-index: 10 !important;
+    text-align: center !important;
+    padding: 0 !important;
+    animation: fadeInLuxe 1.5s ease-out !important;
+}
+
+.brand-logo-elite img {
+    max-width: 680px !important; /* Increased for cinematic presence */
+    width: 85% !important; /* Scalable within the 55% panel */
+    height: auto !important;
+    filter: none !important; /* Removed shadow/glow to keep it sharp */
+}
+
+.brand-tagline-luxe {
+    color: #ffffff !important;
+}
+
+.motto-accent {
+    display: block !important;
+    font-size: 1rem !important;
+    font-weight: 400 !important;
+    letter-spacing: 8px !important;
+    text-transform: uppercase !important;
+    margin-bottom: 0.5rem !important;
+    color: var(--luxe-gold) !important;
+}
+
+.motto-title {
+    font-family: var(--serif-font) !important;
+    font-size: 4.5rem !important;
+    font-weight: 700 !important;
+    font-style: italic !important;
+    letter-spacing: -1px !important;
+    margin: 0 !important;
+    text-shadow: 0 10px 30px rgba(0,0,0,0.5) !important;
+}
+
+/* RIGHT SIDE: THE ACCESS PORTAL (CLEAN LIGHT BOUTIQUE) */
+.access-portal {
+    flex: 1 !important;
+    background: #f4f4f4 !important; /* Almost white grey as requested */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    z-index: 1 !important;
+    padding: 2rem !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+/* Soft light pattern for the white area */
+.access-portal::after {
+    content: '';
+    position: absolute !important;
+    inset: 0 !important;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l30 30-30 30L0 30z' fill='none' stroke='%23000000' stroke-width='0.5' opacity='0.03'/%3E%3C/svg%3E") !important;
+    background-size: 80px 80px !important;
+    z-index: -1 !important;
+    pointer-events: none !important;
+}
+
+.login-box-premium {
+    width: 440px !important;
+    animation: slideUpLuxe 1s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.access-card {
+    background: #ffffff !important; 
+    border-radius: 40px !important;
+    box-shadow: 
+        0 10px 15px -3px rgba(0, 0, 0, 0.01),
+        0 40px 80px -20px rgba(0, 0, 0, 0.05) !important;
+    padding: 5rem 4rem !important; /* Increased padding for elegance */
+    border: 1px solid rgba(0, 0, 0, 0.02) !important;
+    text-align: center !important;
+}
+
+.access-header {
+    margin-bottom: 5.5rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+}
+
+.brand-title-luxe {
+    font-size: 1.4rem !important;
+    font-weight: 900 !important;
+    color: #4A3728 !important; /* Elegant Mocha */
+    margin-bottom: 1.8rem !important;
+    letter-spacing: 0.35em !important;
+    text-transform: uppercase !important;
+    line-height: 1.2 !important;
+    position: relative !important;
+    display: inline-block !important;
+    font-family: var(--sans-font) !important;
+}
+
+/* Gold Underline - Professional length */
+.brand-title-luxe::after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: -15px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 40px !important;
+    height: 2.5px !important;
+    background-color: var(--luxe-gold) !important;
+    border-radius: 50px !important;
+}
+
+.brand-subtitle-luxe {
+    font-family: var(--sans-font) !important;
+    font-size: 0.85rem !important;
+    color: var(--luxe-gold) !important;
+    font-style: normal !important;
+    font-weight: 600 !important;
+    opacity: 0.8 !important;
+    margin-top: 1.2rem !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+}
+
+/* Updated Form Styling for Light Background */
+.login-box-premium .input-group {
+    background: #f9f9f9 !important;
+    border: 1px solid rgba(0, 0, 0, 0.06) !important;
+    border-radius: 12px !important;
+    height: 58px !important;
+    margin-bottom: 1.25rem !important;
+    transition: all 0.3s ease !important;
+}
+
+.login-box-premium .input-group:focus-within {
+    background: #ffffff !important;
+    border-color: var(--luxe-gold) !important;
+    box-shadow: 0 0 0 4px rgba(197, 160, 89, 0.1) !important;
+}
+
+/* Restore icons for precision */
+.login-box-premium .input-group-append {
+    display: flex !important;
+    align-items: center !important;
+    padding-right: 1.25rem !important;
+}
+
+.login-box-premium .input-group-text {
+    background: transparent !important;
+    border: none !important;
+    color: var(--luxe-gold) !important;
+    font-size: 0.9rem !important;
+    opacity: 0.6 !important;
+}
+
+.login-box-premium .form-control {
+    background: transparent !important;
+    border: none !important;
+    color: var(--luxe-graphite) !important;
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+    padding-left: 0.5rem !important; /* Tighter align */
+}
+
+/* High Contrast Button for Light Theme */
+.login-box-premium .btn-block {
+    height: 60px !important;
+    border-radius: 14px !important;
+    background: var(--luxe-graphite) !important;
+    color: #ffffff !important;
+    font-weight: 800 !important;
+    font-size: 0.95rem !important;
+    letter-spacing: 1.5px !important;
+    margin-top: 2rem !important;
+    border: 1px solid rgba(197, 160, 89, 0.3) !important; /* Fine Gold Border */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    text-transform: uppercase !important;
+}
+
+.login-box-premium .btn-block:hover {
+    transform: translateY(-3px) !important;
+    background: #000000 !important;
+    border-color: var(--luxe-gold) !important;
+    color: white !important;
+    box-shadow: 0 15px 35px rgba(197, 160, 89, 0.15) !important;
+}
+
+.access-footer {
+    margin-top: 4rem !important;
+    font-size: 0.8rem !important;
+    color: #aaa !important;
+    letter-spacing: 0.5px !important;
+}
+
+.back-to-site {
+    display: inline-block !important;
+    color: var(--luxe-gold) !important;
+    text-decoration: none !important;
+    font-weight: 600 !important;
+    font-size: 0.9rem !important;
+    margin-bottom: 2rem !important;
+    transition: all 0.3s ease !important;
+    padding: 8px 16px !important;
+    border-radius: 30px !important;
+    background: rgba(197, 160, 89, 0.05) !important;
+}
+
+.back-to-site:hover {
+    background: var(--luxe-gold) !important;
+    color: #000 !important;
+    transform: translateX(-5px) !important;
+}
+
+.back-to-site i {
+    margin-right: 8px !important;
+    font-size: 0.8rem !important;
+}
+
+/* Reset autofill for light theme */
+.login-box-premium .form-control:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #f9f9f9 inset !important;
+    -webkit-text-fill-color: var(--luxe-graphite) !important;
+}
+
+/* Animations */
+@keyframes fadeInLuxe {
+    from { opacity: 0; transform: scale(0.98); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideUpLuxe {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Mobile Adaptation */
+@media (max-width: 992px) {
+    .brand-showcase { display: none !important; }
+    .access-portal { padding: 0 !important; background: var(--luxe-graphite) !important; }
+    .access-card { border-radius: 0 !important; height: 100vh !important; display: flex !important; flex-direction: column !important; justify-content: center !important; }
+}
+
+/* Text decoration for logout messages and links */
+.login-box p.mb-1 a, .login-box p.mb-0 a {
+    color: #C5A059 !important;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.login-box p.mb-1 a:hover, .login-box p.mb-0 a:hover {
+    color: #4A3728 !important;
+    text-decoration: underline !important;
+}
+
+/* Sidebar Logout Button */
+.nav-sidebar a[href*="logout"] {
+    background-color: transparent !important;
+    color: var(--diffiori-gray-light) !important;
+    border: 1px solid rgba(108, 117, 125, 0.4) !important;
+    border-radius: 10px !important;
+    margin: 1.5rem 1rem !important;
+    transition: all 0.2s ease;
+    font-size: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 10px !important;
+}
+
+.nav-sidebar a[href*="logout"]::after {
+    content: "Cerrar sesión" !important;
+    font-size: 0.85rem !important;
+    color: var(--diffiori-gold) !important; /* Gold text */
+    font-weight: 700 !important;
+    letter-spacing: 0.5px;
+}
+
+.nav-sidebar a[href*="logout"]:hover {
+    background-color: var(--diffiori-gray-dark) !important;
+    border-color: var(--diffiori-gray-dark) !important;
+}
+
+.nav-sidebar a[href*="logout"]:hover::after {
+    color: white !important;
+}
+
+/* Header Dropdown Logout Link (DEEP FIX - No more font-size hacks) */
+/* Target the blue background directly from AdminLTE/Jazzmin */
+.dropdown-menu .dropdown-item.bg-primary,
+.dropdown-menu .dropdown-item.active,
+.user-menu .dropdown-item[href*="logout"],
+.navbar-nav .dropdown-item[href*="logout"] {
+    background-color: #333333 !important; /* Darker elite background */
+    background: #333333 !important;
+    color: var(--diffiori-gold) !important; /* Gold text as requested */
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: flex !important;
+    align-items: center !important;
+    padding: 10px 20px !important;
+    font-size: 0.9rem !important;
+    font-weight: 700 !important;
+    border-bottom: 1px solid rgba(255,255,255,0.05) !important;
+}
+
+/* Ensure the icon stays gold and visible */
+.dropdown-menu .dropdown-item[href*="logout"] i,
+.navbar-nav .dropdown-item[href*="logout"] i {
+    color: #f39c12 !important; /* Gold */
+    margin-right: 10px !important;
+    display: inline-block !important;
+    visibility: visible !important;
+}
+
+/* Hover state for the gray button */
+.dropdown-menu .dropdown-item[href*="logout"]:hover,
+.dropdown-menu .dropdown-item.bg-primary:hover {
+    background-color: #495057 !important; /* Darker Gray */
+    color: #ffffff !important;
+}
+
+/* Fallback for the text if it's being hidden by previous versions */
+.dropdown-item[href*="logout"]:empty::after {
+    content: "Terminar sesión";
+}
+
+/* --- BETTER INTUITION FOR LIST VIEW LINKS --- */
+.results table tbody tr:hover {
+    background-color: rgba(245, 242, 235, 0.5) !important;
+}
+
+.results table tbody td a {
+    color: var(--diffiori-brown) !important;
+    font-weight: 600 !important;
+    transition: all 0.2s ease !important;
+    padding: 2px 4px;
+    border-radius: 4px;
+}
+
+.results table tbody td a:hover {
+    color: var(--diffiori-gold) !important;
+    text-decoration: underline !important;
+    background-color: rgba(51, 51, 51, 0.05);
+}
+
+/* New Minimalist Edit Icon Styling */
+.edit-icon-link {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 8px !important;
+    background-color: rgba(51, 51, 51, 0.05) !important;
+    color: var(--diffiori-gold) !important;
+    font-size: 1.1rem !important;
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+    border: 1px solid rgba(51, 51, 51, 0.1) !important;
+    text-decoration: none !important;
+}
+
+.edit-icon-link:hover {
+    background-color: var(--diffiori-gold) !important;
+    color: white !important;
+    transform: scale(1.1) translateY(-2px) !important;
+    box-shadow: 0 4px 8px rgba(51, 51, 51, 0.2) !important;
+    text-decoration: none !important;
+}
+
+/* Delete Icon Styling (Trash) */
+.delete-icon-link {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 8px !important;
+    background-color: rgba(102, 102, 102, 0.05) !important;
+    color: #333333 !important;
+    font-size: 1.1rem !important;
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+    border: 1px solid rgba(102, 102, 102, 0.1) !important;
+    text-decoration: none !important;
+}
+
+.delete-icon-link:hover {
+    background-color: #333333 !important;
+    color: white !important;
+    transform: scale(1.1) translateY(-2px) !important;
+    box-shadow: 0 4px 8px rgba(102, 102, 102, 0.3) !important;
+    text-decoration: none !important;
+}
+
+/* --- ULTRA-PREMIUM EDITABLE LIST FIELDS --- */
+.results table td.column-price, .results table td.column-stock {
+    padding-top: 15px !important;
+    padding-bottom: 15px !important;
+    vertical-align: middle !important;
+}
+
+/* Base styling for Numeric Inputs as Mini-Widgets */
+.results table input[type="number"] {
+    border: 1px solid rgba(51, 51, 51, 0.15) !important;
+    border-radius: 20px !important; /* Pill shape */
+    padding: 6px 14px !important;
+    max-width: 90px !important;
+    font-weight: 700 !important;
+    font-family: 'Inter', sans-serif !important;
+    color: var(--diffiori-brown) !important;
+    background: #ffffff !important;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.03) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    text-align: center;
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+    appearance: textfield; /* Standard property */
+}
+
+/* Hide spin buttons for cleaner look */
+.results table input[type="number"]::-webkit-outer-spin-button,
+.results table input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.results table input[type="number"]:hover {
+    border-color: rgba(51, 51, 51, 0.4) !important;
+    background-color: #fff !important;
+}
+
+.results table input[type="number"]:focus {
+    border-color: var(--diffiori-gold) !important;
+    box-shadow: 0 0 0 4px rgba(51, 51, 51, 0.08) !important;
+    outline: none !important;
+    transform: scale(1.05);
+}
+
+/* Special Case: Stock Visual Feedback */
+.results table td.column-stock input {
+    background-color: #fcfaf7 !important;
+}
+
+/* Stock Intensity Warnings via CSS attribute targeting if possible, 
+   otherwise just general high-end look */
+.results table td.column-stock input[value="0"],
+.results table td.column-stock input[value^="-"] {
+    color: #cc0000 !important;
+    border-color: rgba(204, 0, 0, 0.2) !important;
+    background-color: #fff5f5 !important;
+}
+
+/* Beautiful Price Prefix */
+.results table td.column-price div:before {
+    content: "$";
+    position: relative;
+    left: 20px;
+    font-weight: 700;
+    color: var(--diffiori-gold);
+    opacity: 0.5;
+    pointer-events: none;
+}
+.results table td.column-price input {
+    padding-left: 20px !important;
+}
+
+/* Modern Toggle Switches for Boolean Fields */
+.results table td:not(.action-checkbox) input[type="checkbox"] {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    width: 44px !important;
+    height: 22px !important;
+    background-color: rgba(51, 51, 51, 0.1) !important;
+    border: 1.5px solid rgba(51, 51, 51, 0.15) !important;
+    border-radius: 20px !important;
+    position: relative !important;
+    cursor: pointer !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    vertical-align: middle !important;
+    outline: none !important;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.02) !important;
+}
+
+.results table td:not(.action-checkbox) input[type="checkbox"]:checked {
+    background-color: var(--diffiori-gold) !important;
+    border-color: var(--diffiori-gold) !important;
+}
+
+.results table td:not(.action-checkbox) input[type="checkbox"]::before {
+    content: "" !important;
+    position: absolute !important;
+    top: 2px !important;
+    left: 2px !important;
+    width: 15px !important;
+    height: 15px !important;
+    background-color: white !important;
+    border-radius: 50% !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+}
+
+.results table td:not(.action-checkbox) input[type="checkbox"]:checked::before {
+    left: 24px !important;
+    transform: scale(1.1) !important;
+}
+
+.results table td:not(.action-checkbox) input[type="checkbox"]:hover {
+    transform: scale(1.05) !important;
+    border-color: rgba(51, 51, 51, 0.3) !important;
+}
+
+.results table td:not(.action-checkbox) input[type="checkbox"]:focus {
+    box-shadow: 0 0 0 4px rgba(51, 51, 51, 0.1) !important;
+}
+
+/* Table Enhancements */
+.results table th {
+    background-color: rgba(51, 51, 51, 0.02) !important;
+    border-bottom: 2px solid rgba(51, 51, 51, 0.1) !important;
+}
+
+.results table tbody tr {
+    transition: background-color 0.2s ease !important;
+}
+
+.results table tbody tr:hover {
+    background-color: rgba(245, 242, 235, 0.7) !important;
+}
+
+/* Center everything in the list cells and inline cells */
+.results table td, .inline-group table td {
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+
+/* --- GLOBAL REFINEMENT FOR EDITABLE FIELDS (TEXT, SELECT, NUMBER) --- */
+.results table td input[type="text"], 
+.results table td input[type="number"], 
+.results table td select,
+.inline-group table td input[type="text"], 
+.inline-group table td input[type="number"], 
+.inline-group table td select {
+    border: 1px solid rgba(51, 51, 51, 0.15) !important;
+    border-radius: 20px !important;
+    padding: 6px 14px !important;
+    font-weight: 700 !important;
+    font-family: 'Inter', sans-serif !important;
+    color: var(--diffiori-brown) !important;
+    background: #ffffff !important;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.02) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    text-align: center;
+    text-align-last: center; /* For selects */
+    display: inline-block !important;
+    max-width: 100% !important;
+}
+
+.results table td select, .inline-group table td select {
+    padding-right: 30px !important;
+    cursor: pointer;
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%238B3D30' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: calc(100% - 12px) center !important;
+    background-color: #ffffff !important;
+}
+
+/* Exception for left-aligned primary columns like Name/Title if needed, 
+   but for now following user request to center everything editable */
+/* --- INLINE ADD/REMOVE MINIMALIST ICONS (MATCHING REFERENCE) --- */
+
+/* Add Row Button -> Brown Circle Plus */
+.inline-group .add-row a, 
+.js-inline-admin-formset .add-row a,
+#variants-group .add-row a {
+    background-color: var(--diffiori-brown) !important;
+    color: white !important;
+    width: 32px !important; /* Larger */
+    height: 32px !important; 
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 0 !important;
+    padding: 0 !important;
+    margin: 15px auto !important; 
+    box-shadow: 0 4px 8px rgba(51, 51, 51, 0.2) !important;
+    transition: all 0.2s ease !important;
+    border: none !important;
+    text-decoration: none !important;
+}
+
+.inline-group .add-row a:hover,
+#variants-group .add-row a:hover {
+    transform: scale(1.1) rotate(90deg) !important;
+    background-color: var(--diffiori-brown-hover) !important;
+}
+
+.inline-group .add-row a::before,
+#variants-group .add-row a::before {
+    content: "\f067" !important;
+    font-family: "Font Awesome 5 Free" !important;
+    font-weight: 900 !important;
+    font-size: 0.7rem !important; /* Smaller icon */
+}
+
+/* Remove Row -> Red Square Trash Button */
+.inline-group .delete a,
+.js-inline-admin-formset .delete a,
+#variants-group .delete a {
+    font-size: 0 !important;
+    background-color: #333333 !important;
+    color: white !important;
+    width: 30px !important; 
+    height: 30px !important; 
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 8px !important;
+    margin: 0 auto !important;
+    box-shadow: 0 4px 8px rgba(102, 102, 102, 0.2) !important;
+    transition: all 0.2s ease !important;
+    text-decoration: none !important;
+}
+
+.inline-group .delete a:hover,
+#variants-group .delete a:hover {
+    background-color: #4a4a4a !important;
+    transform: scale(1.1) !important;
+    box-shadow: 0 6px 12px rgba(51, 51, 51, 0.3) !important;
+}
+
+.inline-group .delete a::before,
+#variants-group .delete a::before {
+    content: "\f2ed" !important;
+    font-family: "Font Awesome 5 Free" !important;
+    font-weight: 900 !important;
+    font-size: 1.1rem !important;
+    color: white !important;
+}
+
+/* Hide the default checkbox if it exists near the delete link */
+.inline-group td.delete input[type="checkbox"],
+#variants-group td.delete input[type="checkbox"] {
+    display: none !important;
+}
+
+.inline-group table thead th.column-delete,
+#variants-group table thead th.column-delete {
+    width: 60px !important;
+    text-align: center !important;
+}
+
+/* --- FIX: Jazzmin Related Modal (Add Category, etc.) --- */
+.modal .modal-body iframe {
+    width: 100% !important;
+    min-height: 400px !important;
+    border: none !important;
+    display: block !important;
+}
+
+.modal .modal-dialog {
+    max-width: 600px !important;
+}
+
+.modal .modal-content {
+    border-radius: 16px !important;
+    overflow: hidden !important;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15) !important;
+}
+
+.modal .modal-header {
+    background-color: var(--diffiori-beige) !important;
+    border-bottom: 1px solid rgba(51, 51, 51, 0.1) !important;
+    padding: 1rem 1.5rem !important;
+}
+
+.modal .modal-header .modal-title {
+    color: var(--diffiori-brown) !important;
+    font-weight: 700 !important;
+}
+
+/* NUCLEAR OVERRIDE TO KILL ALL REMAINING REDS ON ANY PAGE */
+/* Targeted selectors for the specific red button in your image */
+input[value*="atrás"],
+input[value*="Atrás"],
+input[value*="no"],
+input[value*="No"],
+a[class*="cancel"],
+.cancel-link,
+.btn-danger,
+.btn-outline-danger,
+input[class*="danger"],
+.submit-row a.deletelink,
+.submit-row .deletelink a,
+.button.cancel-link {
+    background: #333333 !important;
+    background-color: #333333 !important;
+    background-image: none !important;
+    border-color: #333333 !important;
+    color: #ffffff !important;
+    text-shadow: none !important;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1) !important;
+}
+
+/* Ensure HOVER also doesn't show red */
+input[value*="atrás"]:hover,
+a[class*="cancel"]:hover,
+.btn-danger:hover {
+    background: #1a1a1a !important;
+    background-color: #1a1a1a !important;
+    border-color: #1a1a1a !important;
+    color: #ffffff !important;
+    transform: translateY(-2px);
+}
+
+/* Global Premium Gold Buttons (ULTRA-SPECIFIC TO AVOID LEAK) */
+.content-wrapper a.btn-primary:not(.btn-danger),
+.content-wrapper a.btn-info,
+.content-wrapper a.btn-success,
+.content-wrapper a.btn-warning,
+.content-wrapper button.btn-primary:not(.btn-danger),
+.content-wrapper input[type="submit"].btn-primary:not(.btn-danger),
+.content-wrapper .btn-save, 
+.content-wrapper .addlink, 
+.content-wrapper .changelink,
+input[type="submit"][value*="SI"],
+input[type="submit"][value*="Si"],
+input[type="submit"][value*="si"] {
+    background: linear-gradient(180deg, #F9E895 0%, #C5A059 50%, #B08D45 100%) !important;
+    border: none !important;
+    color: #4A3728 !important; /* Recommended Mocha Brown */
+    font-weight: 800 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    box-shadow: 0 4px 8px rgba(197, 160, 89, 0.3) !important;
+    transition: all 0.3s ease !important;
+    border-radius: 10px !important;
+    padding: 8px 16px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+}
+
+/* 🚨 KILL BACKGROUNDS ON ALL DIV CONTAINERS 🚨 */
+.content-wrapper div.btn-group,
+.content-wrapper div.btn-toolbar,
+.content-wrapper div[class*="btn-group"],
+.content-wrapper div[class*="btn-toolbar"] {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    display: flex !important;
+    float: none !important;
+}
+
+/* Force SEPARATION between buttons inside any group */
+.content-wrapper .btn-group > .btn,
+.content-wrapper .btn-group > a,
+.content-wrapper .btn-group > button {
+    margin-right: 15px !important; /* Space between the two buttons */
+    margin-left: 0 !important;
+    border-radius: 10px !important; /* Individual corners */
+}
+
+/* Overwrite the rule that joins them in Bootstrap */
+.content-wrapper .btn-group > .btn:not(:last-child):not(.dropdown-toggle),
+.content-wrapper .btn-group > .btn:not(:first-child) {
+    border-radius: 10px !important;
+}
+
+/* --- PREMIUM DASHBOARD STATS CARDS --- */
+.info-box {
+    background-color: #ffffff !important;
+    border-radius: 20px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05) !important;
+    border: 1px solid rgba(0, 0, 0, 0.03) !important;
+    padding: 1.5rem !important;
+    margin-bottom: 2rem !important;
+    height: auto !important;
+    min-height: 140px !important;
+    display: flex !important;
+    align-items: center !important;
+    transition: all 0.3s ease !important;
+}
+
+.info-box:hover {
+    transform: translateY(-5px) !important;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Icon Container */
+.info-box .info-box-icon {
+    width: 65px !important;
+    height: 65px !important;
+    border-radius: 14px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 1.8rem !important;
+    margin-right: 1.2rem !important;
+    background-color: rgba(197, 160, 89, 0.08) !important; /* Pale Gold background */
+    color: var(--diffiori-gold) !important;
+    flex-shrink: 0 !important;
+    box-shadow: none !important;
+}
+
+/* Neutralize all standard AdminLTE background classes */
+.info-box .bg-info, .info-box .bg-success, .info-box .bg-warning, .info-box .bg-danger, .info-box .bg-primary {
+    background-color: rgba(197, 160, 89, 0.08) !important;
+    color: var(--diffiori-gold) !important;
+}
+
+/* Text Content Area */
+.info-box .info-box-content {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    padding: 0 !important;
+}
+
+/* Dashboard Label */
+.info-box .info-box-text {
+    font-size: 0.75rem !important;
+    font-weight: 800 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1.5px !important;
+    color: #999999 !important;
+    margin-bottom: 0.2rem !important;
+}
+
+/* Main Number */
+.info-box .info-box-number {
+    font-size: 2.2rem !important;
+    font-weight: 900 !important;
+    color: var(--diffiori-brown) !important; /* Graphite Grey */
+    line-height: 1.2 !important;
+    display: block !important;
+    margin-bottom: 0.4rem !important;
+}
+
+/* The Luxury Underline - REMOVED AS REQUESTED (INVISIBLE) */
+.info-box .info-box-number::after {
+    display: none !important;
+}
+
+/* Sub-text */
+.info-box .progress-description, 
+.info-box small {
+    font-size: 0.8rem !important;
+    color: #bbbbbb !important;
+    font-weight: 500 !important;
+    display: block !important;
+    margin-top: 0.5rem !important;
+}
+
+/* Clean hover state */
+.content-wrapper a.btn:hover, 
+.content-wrapper button.btn:hover {
+    filter: brightness(1.1) !important;
+    color: #33251a !important; /* Slightly darker mocha on hover */
+    transform: translateY(-1px);
+}
+
+/* Hover ensures color stays visible */
+.btn-info:hover, .btn-success:hover, .btn-primary:hover {
+    color: white !important;
+    filter: brightness(1.1) !important;
+}
+/* Hiding redundant titles in logout/login content blocks */
+.access-body > h2,
+.access-body > p:first-of-type,
+.access-body .login-box-msg {
+    display: none !important;
+}
+
+/* Re-enable only the success message/thank you if needed, or keep it clean */
+.access-body p {
+    display: block !important; /* Ensure other paragraphs show */
+    font-size: 0.95rem !important;
+    color: var(--luxe-graphite) !important;
+    opacity: 0.8;
+    margin-bottom: 2rem !important;
+    line-height: 1.6 !important;
+}

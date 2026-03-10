@@ -9,10 +9,10 @@ class HeroSlideAdmin(admin.ModelAdmin):
     list_display_links = ("get_thumbnail", "title", "edit_button")
     list_editable = ("order", "is_active")
     search_fields = ("title",)
-    exclude = ("title_en", "subtitle_en", "button_text_en")
+    # exclude = ("title_en", "subtitle_en", "button_text_en")
     readonly_fields = ("button_link",)
     save_on_top = True
-
+ 
     def edit_button(self, obj):
         if obj.pk:
             url = reverse('admin:content_heroslide_change', args=[obj.pk])
@@ -23,13 +23,16 @@ class HeroSlideAdmin(admin.ModelAdmin):
             )
         return "-"
     edit_button.short_description = "Acciones"
-    
+
     fieldsets = (
         ("Imagen y Configuración", {
             "fields": ("image", "button_link", "order", "is_active")
         }),
-        ("Contenido", {
+        ("Contenido (Español)", {
             "fields": ("title", "subtitle", "button_text")
+        }),
+        ("Contenido (Inglés)", {
+            "fields": ("title_en", "subtitle_en", "button_text_en")
         }),
     )
 
@@ -43,7 +46,7 @@ class HeroSlideAdmin(admin.ModelAdmin):
 class HomeAboutAdmin(admin.ModelAdmin):
     list_display = ("get_thumbnail", "title", "edit_button")
     list_display_links = ("get_thumbnail", "title", "edit_button")
-    exclude = ("title_en", "description_en", "long_description_en", "cta_text_en")
+    # exclude = ("title_en", "description_en", "long_description_en", "cta_text_en")
     save_on_top = True
 
     def edit_button(self, obj):
@@ -56,13 +59,16 @@ class HomeAboutAdmin(admin.ModelAdmin):
             )
         return "-"
     edit_button.short_description = "Acciones"
-    
+
     fieldsets = (
         ("Imagen", {
             "fields": ("image",)
         }),
-        ("Contenido", {
+        ("Contenido (Español)", {
             "fields": ("title", "description", "long_description", "cta_text")
+        }),
+        ("Contenido (Inglés)", {
+            "fields": ("title_en", "description_en", "long_description_en", "cta_text_en")
         }),
     )
 
@@ -85,7 +91,7 @@ class HomeFeatureAdmin(admin.ModelAdmin):
     list_display = ("title", "icon", "order", "is_active", "edit_button")
     list_display_links = ("title", "edit_button")
     list_editable = ("order", "is_active")
-    exclude = ("title_en", "description_en")
+    # exclude = ("title_en", "description_en", "value")
     save_on_top = True
 
     def edit_button(self, obj):
@@ -98,47 +104,50 @@ class HomeFeatureAdmin(admin.ModelAdmin):
             )
         return "-"
     edit_button.short_description = "Acciones"
-    
+
     fieldsets = (
         ("Configuración", {
             "fields": ("icon", "order", "is_active")
         }),
-        ("Contenido", {
+        ("Contenido (Español)", {
             "fields": ("title", "description")
+        }),
+        ("Contenido (Inglés)", {
+            "fields": ("title_en", "description_en")
         }),
     )
 
 @admin.register(HomeCTA)
 class HomeCTAAdmin(admin.ModelAdmin):
-    list_display = ("title", "cta_link", "edit_button")
-    list_display_links = ("title", "edit_button")
-    exclude = ("title_en", "subtitle_en", "cta_text_en")
-    readonly_fields = ("cta_link",)
+    list_display = ("title", "cta_link", "actions_buttons")
+    list_display_links = ("title",)
+    # exclude = ("title_en", "subtitle_en", "cta_text_en")
     save_on_top = True
 
-    def edit_button(self, obj):
+    def actions_buttons(self, obj):
         if obj.pk:
-            url = reverse('admin:content_homecta_change', args=[obj.pk])
+            edit_url = reverse('admin:content_homecta_change', args=[obj.pk])
+            delete_url = reverse('admin:content_homecta_delete', args=[obj.pk])
             return format_html(
                 '<a href="{}" class="edit-icon-link" title="Editar elemento">'
-                '<i class="fas fa-pencil-alt"></i></a>',
-                url
+                '<i class="fas fa-pencil-alt"></i></a>'
+                '&nbsp;&nbsp;'
+                '<a href="{}" class="delete-icon-link" title="Eliminar elemento" '
+                'style="color: #8B3D30;">'
+                '<i class="fas fa-trash-alt"></i></a>',
+                edit_url, delete_url
             )
         return "-"
-    edit_button.short_description = "Acciones"
+    actions_buttons.short_description = "Acciones"
+
     fieldsets = (
         ("Configuración", {
             "fields": ("cta_link", "background_image")
         }),
-        ("Contenido", {
+        ("Contenido (Español)", {
             "fields": ("title", "subtitle", "cta_text")
         }),
+        ("Contenido (Inglés)", {
+            "fields": ("title_en", "subtitle_en", "cta_text_en")
+        }),
     )
-
-    def has_add_permission(self, request):
-        if self.model.objects.count() >= 1:
-            return False
-        return super().has_add_permission(request)
-
-    def has_delete_permission(self, request, obj=None):
-        return False

@@ -24,6 +24,11 @@ urlpatterns = [
     path("api/orders/", include("apps.orders.api.router")),
 ]
 
+# Branding del admin (fallback si Jazzmin no carga)
+admin.site.site_header = "Diffiori Café"
+admin.site.site_title = "Diffiori Admin"
+admin.site.index_title = "Gestión de Contenido"
+
 # Servir media y static en DEBUG
 if settings.DEBUG:
     urlpatterns += static(

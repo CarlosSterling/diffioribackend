@@ -59,12 +59,17 @@ class Product(models.Model):
         help_text="Archivo descargable opcional con especificaciones técnicas."
     )
 
+    sort_order = models.PositiveIntegerField("Orden", default=0, help_text="Número para ordenar manualmente (1, 2, 3...).")
+
+    # ───── Destacado ─────
+    is_favorite = models.BooleanField("Producto Favorito", default=False, help_text="Marcar para mostrar este producto en la sección 'Nuestros Favoritos' del inicio.")
+
     # ───── Control ─────
     is_active   = models.BooleanField("Producto Disponible", default=True, help_text="Se desactiva automáticamente si el stock es 0.")
     created_at  = models.DateTimeField("Fecha de Creación", auto_now_add=True)
 
     class Meta:
-        ordering = ["-created_at"]
+        ordering = ["sort_order", "created_at"]
         verbose_name = "Producto"
         verbose_name_plural = "Productos"
 
@@ -104,6 +109,7 @@ class ProductImage(models.Model):
     )
     image   = models.ImageField("Imagen", upload_to="products/gallery/", help_text="Cargue fotos adicionales para mostrar en la galería del producto.")
     alt     = models.CharField("Texto Alternativo (Accesibilidad)", max_length=120, blank=True, help_text="Breve descripción de la imagen para personas con discapacidad visual.")
+    alt_en  = models.CharField("Texto Alternativo (Inglés)", max_length=120, blank=True)
 
     class Meta:
         verbose_name = "imagen"
@@ -124,8 +130,10 @@ class ProductVariant(models.Model):
         verbose_name="Producto"
     )
     
-    weight = models.CharField("Peso/Gramaje", max_length=50, help_text="Ej: 250 gr, 500 gr")
-    grind  = models.CharField("Molienda/Presentación", max_length=100, help_text="Ej: Molido, En pepa, Cápsulas")
+    weight    = models.CharField("Peso/Gramaje", max_length=50, help_text="Ej: 250 gr, 500 gr")
+    weight_en = models.CharField("Peso/Gramaje (Inglés)", max_length=50, blank=True)
+    grind     = models.CharField("Molienda/Presentación", max_length=100, help_text="Ej: Molido, En pepa, Cápsulas")
+    grind_en  = models.CharField("Molienda/Presentación (Inglés)", max_length=100, blank=True)
     
     price  = models.DecimalField("Precio de esta Variante", max_digits=12, decimal_places=2)
     stock  = models.PositiveIntegerField("Stock", default=0)

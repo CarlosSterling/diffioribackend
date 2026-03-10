@@ -14,7 +14,7 @@ class BlogPostAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("title",)}
     date_hierarchy = "published_at"
     actions = ["make_published", "make_unpublished", "duplicate_post"]
-    exclude = ("title_en", "excerpt_en", "content_en")
+    # exclude = ("title_en", "excerpt_en", "content_en")
     save_on_top = True
 
     def edit_button(self, obj):
@@ -28,8 +28,14 @@ class BlogPostAdmin(admin.ModelAdmin):
         return "-"
     edit_button.short_description = "Acciones"
     fieldsets = (
-        ("Contenido Principal", {
-            "fields": ("title", "slug", ("cover_image", "cover_preview"), "excerpt", "content")
+        ("Contenido Principal (Español)", {
+            "fields": ("title", "excerpt", "content")
+        }),
+        ("Contenido Principal (Inglés)", {
+            "fields": ("title_en", "excerpt_en", "content_en")
+        }),
+        ("Configuración Técnica", {
+            "fields": ("slug", ("cover_image", "cover_preview"))
         }),
         ("Publicación", {
             "fields": ("is_published", "published_at")

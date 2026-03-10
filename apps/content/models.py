@@ -3,9 +3,9 @@ from django.utils.translation import gettext_lazy as _
 
 class HeroSlide(models.Model):
     image = models.ImageField("Imagen de Fondo", upload_to="hero/", help_text="Imagen que se mostrará en el carrusel principal. Tamaño recomendado: 1920x1080px.")
-    title = models.CharField("Título (Español)", max_length=200, help_text="Título principal de la diapositiva en español.")
+    title = models.CharField("Título (Español)", max_length=200, blank=True, default="", help_text="Título principal de la diapositiva en español.")
     title_en = models.CharField("Título (Inglés)", max_length=200, blank=True, help_text="Título principal en inglés.")
-    subtitle = models.TextField("Subtítulo (Español)", help_text="Texto secundario que aparece debajo del título.")
+    subtitle = models.TextField("Subtítulo (Español)", blank=True, default="", help_text="Texto secundario que aparece debajo del título.")
     subtitle_en = models.TextField("Subtítulo (Inglés)", blank=True, help_text="Texto secundario en inglés.")
     button_text = models.CharField("Texto del Botón (Español)", max_length=50, default="Comprar Ahora", help_text="El texto que aparecerá dentro del botón.")
     button_text_en = models.CharField("Texto del Botón (Inglés)", max_length=50, default="Buy Now", help_text="Texto del botón en inglés.")
@@ -46,6 +46,13 @@ class HomeFeature(models.Model):
         ("Leaf", "Hoja"),
         ("Truck", "Camión"),
         ("Heart", "Corazón"),
+        ("MessageSquare", "Mensaje"),
+        ("Users", "Usuarios"),
+        ("Globe", "Globo"),
+        ("Clock", "Reloj"),
+        ("Star", "Estrella"),
+        ("ShieldCheck", "Escudo"),
+        ("Zap", "Rayo"),
     ]
     icon = models.CharField("Icono", max_length=50, choices=ICON_CHOICES, default="Coffee", help_text="Seleccione el icono que mejor represente esta característica.")
     title = models.CharField("Título (Español)", max_length=100, help_text="Nombre corto de la característica.")
@@ -64,13 +71,13 @@ class HomeFeature(models.Model):
         return self.title
 
 class HomeCTA(models.Model):
-    title = models.CharField("Título del Banner (Español)", max_length=200, help_text="Título llamativo que aparece en el banner inferior.")
+    title = models.CharField("Título del Banner (Español)", max_length=200, blank=True, default="", help_text="Título llamativo que aparece en el banner inferior.")
     title_en = models.CharField("Título del Banner (Inglés)", max_length=200, blank=True)
-    subtitle = models.TextField("Subtítulo (Español)", help_text="Texto de apoyo para el banner.")
+    subtitle = models.TextField("Subtítulo (Español)", blank=True, default="", help_text="Texto de apoyo para el banner.")
     subtitle_en = models.TextField("Subtítulo (Inglés)", blank=True)
     cta_text = models.CharField("Texto del Botón (Español)", max_length=100, help_text="Texto que invita a la acción.")
     cta_text_en = models.CharField("Texto del Botón (Inglés)", max_length=100, blank=True)
-    cta_link = models.CharField("Enlace de Acción", max_length=255, default="/#footer", help_text="Destino del click en el banner.")
+    cta_link = models.CharField("Enlace de Acción", max_length=255, default="/productos", help_text="Destino del click en el banner.")
     background_image = models.ImageField("Imagen de Fondo", upload_to="cta/", help_text="Imagen que se mostrará detrás de los textos del banner.")
 
     class Meta:

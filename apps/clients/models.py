@@ -15,6 +15,8 @@ class Client(models.Model):
     )
     testimonial = models.TextField("Testimonio (Español)", help_text="Comentario o reseña del cliente sobre la cafetería.")
     testimonial_en = models.TextField("Testimonio (Inglés)", blank=True)
+    description    = models.TextField("Descripción Larga (Español)", blank=True, help_text="Información detallada que aparece al hacer clic en 'Ver más'.")
+    description_en = models.TextField("Descripción Larga (Inglés)", blank=True)
     location    = models.CharField("Ubicación/Ciudad", max_length=120, blank=True, help_text="Ciudad o zona del cliente.")
     latitude    = models.DecimalField("Latitud", max_digits=18, decimal_places=15, null=True, blank=True, help_text="Coordenada de latitud para el mapa.")
     longitude   = models.DecimalField("Longitud", max_digits=18, decimal_places=15, null=True, blank=True, help_text="Coordenada de longitud para el mapa.")
@@ -22,7 +24,7 @@ class Client(models.Model):
     created_at  = models.DateTimeField("Fecha de Registro", auto_now_add=True)
 
     class Meta:
-        ordering = ["-created_at"]
+        ordering = ["created_at"]
         verbose_name = "Cliente"
         verbose_name_plural = "Clientes"
 
@@ -38,7 +40,8 @@ class Client(models.Model):
 class ClientImage(models.Model):
     client = models.ForeignKey(Client, related_name="gallery", on_delete=models.CASCADE, verbose_name="Cliente")
     image  = models.ImageField("Imagen", upload_to="clients/gallery/", help_text="Foto adicional del cliente o sus proyectos.")
-    alt    = models.CharField("Texto Alternativo", max_length=120, blank=True)
+    alt    = models.CharField("Texto Alternativo (Español)", max_length=120, blank=True)
+    alt_en = models.CharField("Texto Alternativo (Inglés)", max_length=120, blank=True)
 
     class Meta:
         verbose_name = "imagen"

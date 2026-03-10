@@ -8,10 +8,11 @@ from apps.catalog.models import Product, ProductImage, Category, ProductVariant
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ("name", "slug", "order", "edit_button")
     list_display_links = ("name", "edit_button")
-    prepopulated_fields = {"slug": ("name",)}
-    search_fields = ("name",)
+    # exclude = ("name_en",)
+    fields = ("name", "name_en", "slug", "order", "get_frontend_url")
     readonly_fields = ("get_frontend_url",)
-    exclude = ("name_en",)
+    prepopulated_fields = {"slug": ("name",)}
+    search_fields = ("name", "name_en")
     save_on_top = True
 
     def edit_button(self, obj):
@@ -33,9 +34,16 @@ class CategoryAdmin(admin.ModelAdmin):
     get_frontend_url.short_description = "Enlace en la Web (Solo lectura)"
 
 
+class ProductVariantInline(admin.TabularInline):
+    model = ProductVariant
+    extra = 1
+    fields = ("weight", "weight_en", "grind", "grind_en", "price", "stock", "is_active")
+
+
 class ProductImageInline(admin.TabularInline):
     model = ProductImage
     extra = 1
+    fields = ("image", "alt", "alt_en", "thumbnail")
     readonly_fields = ("thumbnail",)
 
     def thumbnail(self, obj):
@@ -45,24 +53,18 @@ class ProductImageInline(admin.TabularInline):
     thumbnail.short_description = "Vista previa"
 
 
-class ProductVariantInline(admin.TabularInline):
-    model = ProductVariant
-    extra = 1
-    fields = ("weight", "grind", "price", "stock", "is_active")
-
-
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     inlines = [ProductVariantInline, ProductImageInline]
-    list_display = ("get_thumbnail", "name", "category", "price", "stock", "is_active", "edit_button")
+    list_display = ("get_thumbnail", "name", "category", "price", "stock", "is_favorite", "is_active", "edit_button")
     list_display_links = ("get_thumbnail", "name")
-    list_filter = ("category", "is_active", "created_at")
+    list_filter = ("category", "is_active", "is_favorite", "created_at")
     search_fields = ("name", "short_desc", "description")
-    list_editable = ("price", "stock", "is_active")
+    list_editable = ("price", "stock", "is_favorite", "is_active")
     prepopulated_fields = {"slug": ("name",)}
     date_hierarchy = "created_at"
     actions = ["make_active", "make_inactive", "duplicate_product"]
-    exclude = ("name_en", "short_desc_en", "description_en")
+    # exclude = ("name_en", "short_desc_en", "description_en")
     save_on_top = True
     readonly_fields = ("cover_preview",)
 
@@ -78,15 +80,17 @@ class ProductAdmin(admin.ModelAdmin):
     edit_button.short_description = "Acciones"
     
     fieldsets = (
-        ("Información Básica", {
-            "fields": ("name", "slug", "category", ("cover", "cover_preview"), "short_desc", "description")
+        ("Información Básica (Español)", {
+            "fields": ("name", "short_desc", "description")
         }),
-        ("Precio e Inventario", {
-            "fields": (("price", "stock"), "data_sheet")
+        ("Información Básica (Inglés)", {
+            "fields": ("name_en", "short_desc_en", "description_en")
         }),
-        ("Configuración y Estado", {
-            "fields": ("is_active",),
-            "classes": ("collapse",)
+        ("Configuración Técnica", {
+            "fields": ("slug", "category", ("cover", "cover_preview"), ("price", "stock"), "data_sheet")
+        }),
+        ("Destacado y Estado", {
+            "fields": ("is_favorite", "is_active"),
         }),
     )
 

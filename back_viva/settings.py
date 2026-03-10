@@ -37,6 +37,7 @@ DJANGO_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.humanize",
 ]
 
 THIRD_PARTY = [
@@ -167,12 +168,13 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # Jazzmin Admin Theme
 # ────────────────────────────────────────────────────────────
 JAZZMIN_SETTINGS = {
-    "site_title": "Diffiori Café Admin",
+    "site_title": "Diffiori Café | Admin",
     "site_header": "Diffiori",
-    "site_brand": "",
-    "site_logo": "img/logoDiffiori.png",
-    "login_logo": "img/logoDiffiori.png",
-    "welcome_sign": "Bienvenido al Gestor de Diffiori Café",
+    "site_brand": "Diffiori Café",
+    "site_icon": "img/favicon.ico",
+    "site_logo": "img/brand-logo.jpg",
+    "login_logo": "img/brand-logo.jpg",
+    "welcome_sign": "",
     "copyright": "Diffiori Café © 2024",
     "search_model": "catalog.Product",
     "user_avatar": None,
@@ -188,7 +190,7 @@ JAZZMIN_SETTINGS = {
 
     "show_sidebar": True,
     "navigation_expanded": True,
-    "hide_apps": ["core"],
+    "hide_apps": ["core", "clients"],
     "hide_models": ["core.FAQ", "catalog.ProductVariant"],
     "order_with_respect_to": [
         "content",
@@ -200,6 +202,8 @@ JAZZMIN_SETTINGS = {
         "catalog.Product", 
         "catalog.ProductVariant",
         "catalog.Category", 
+        "orders",
+        "orders.Order",
         "clients", 
         "blog", 
         "auth"
@@ -219,6 +223,8 @@ JAZZMIN_SETTINGS = {
         "content.HomeAbout": "fas fa-info-circle",
         "content.HomeFeature": "fas fa-certificate",
         "content.HomeCTA": "fas fa-bullhorn",
+        "orders.Order": "fas fa-shopping-basket",
+        "orders.OrderItem": "fas fa-list-ul",
     },
     "default_icon_parents": "fas fa-chevron-circle-right",
     "default_icon_children": "fas fa-circle",
@@ -238,9 +244,9 @@ JAZZMIN_SETTINGS = {
             "models": ["catalog.Product", "catalog.Category"]
         },
         {
-            "name": "Comunidad",
-            "icon": "fas fa-hand-holding-heart",
-            "models": ["clients.Client"]
+            "name": "Ventas",
+            "icon": "fas fa-money-bill-wave",
+            "models": ["orders.Order", "orders.OrderItem"]
         },
         {
             "name": "Contenido",
@@ -258,7 +264,6 @@ JAZZMIN_SETTINGS = {
             "models": ["auth.User", "auth.Group"]
         },
     ],
-    "site_logo": "img/logoDiffiori.png",
     "use_google_fonts": True,
 }
 

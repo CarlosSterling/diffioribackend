@@ -3,7 +3,12 @@
 
 {% block branding %}
   <h1 id="site-name">
-    <img src="{% static 'img/logoDiffiori.png' %}" alt="Diffiori" style="height:32px;margin-right:8px;">
-    Panel Diffiori
+    <img src="{% static 'img/brand-logo.jpg' %}" alt="Diffiori" style="height:32px;margin-right:8px;border-radius:20%;">
+    Diffiori Café
   </h1>
+{% endblock %}
+
+{% block extrahead %}
+  {{ block.super }}
+  <link rel="icon" type="image/jpeg" href="{% static 'img/brand-logo.jpg' %}">
 {% endblock %}

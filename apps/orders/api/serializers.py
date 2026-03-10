@@ -13,7 +13,7 @@ class OrderSerializer(serializers.ModelSerializer):
         model = Order
         fields = [
             'id', 'user', 'session_id', 'total_amount', 'status', 
-            'shipping_address', 'contact_email', 'contact_phone', 
+            'shipping_address', 'contact_name', 'contact_email', 'contact_phone', 
             'created_at', 'items'
         ]
         read_only_fields = ['id', 'user', 'total_amount', 'status', 'created_at']
@@ -22,6 +22,7 @@ class CheckoutSerializer(serializers.Serializer):
     items = serializers.ListField(
         child=serializers.DictField()
     )
+    contact_name = serializers.CharField(max_length=150)
     contact_email = serializers.EmailField()
     shipping_address = serializers.CharField(max_length=500)
     contact_phone = serializers.CharField(max_length=50)

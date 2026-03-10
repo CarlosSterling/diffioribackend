@@ -7,7 +7,7 @@ from .models import Client, ClientImage
 class ClientImageInline(admin.TabularInline):
     model = ClientImage
     extra = 1
-    fields = ("image", "thumbnail", "alt")
+    fields = ("image", "alt", "alt_en")
     readonly_fields = ("thumbnail",)
 
     def thumbnail(self, obj):
@@ -27,9 +27,9 @@ class ClientAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
     date_hierarchy = "created_at"
     inlines = [ClientImageInline]
-    exclude = ("testimonial_en", "latitude", "longitude")
+    # exclude = ("testimonial_en", "latitude", "longitude")
     save_on_top = True
-
+ 
     def edit_button(self, obj):
         if obj.pk:
             url = reverse('admin:clients_client_change', args=[obj.pk])
@@ -42,18 +42,21 @@ class ClientAdmin(admin.ModelAdmin):
     edit_button.short_description = "Acciones"
 
     fieldsets = (
-        ("Información General", {
-            "fields": (
-                "name", 
-                "slug", 
-                "location", 
-                "testimonial", 
-                ("logo", "logo_preview"),
-                ("cover", "cover_preview")
-            )
+        ("Información General (Español)", {
+            "fields": ("name", "location", "testimonial", "description")
+        }),
+        ("Información General (Inglés)", {
+            "fields": ("testimonial_en", "description_en")
+        }),
+        ("Diseño y Multimedia", {
+            "fields": (("logo", "logo_preview"), ("cover", "cover_preview"))
+        }),
+        ("Geolocalización", {
+            "fields": (("latitude", "longitude"),),
+            "classes": ("collapse",)
         }),
         ("Configuración y Estado", {
-            "fields": ("is_active",),
+            "fields": ("is_active", "slug"),
         }),
     )
     readonly_fields = ("logo_preview", "cover_preview")
