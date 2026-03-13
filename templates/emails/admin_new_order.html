@@ -2,87 +2,146 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nueva Venta - Diffiori Café</title>
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #fafafa; margin: 0; padding: 20px; }
-        .alert-box { max-width: 600px; background: white; margin: 0 auto; border-radius: 12px; border: 1px solid #e1e1e1; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-        .alert-header { background-color: #4A3728; color: #E8D4B0; padding: 20px; text-align: center; }
-        .alert-header h1 { margin: 0; font-size: 18px; text-transform: uppercase; letter-spacing: 2px; }
+        body { margin: 0; padding: 0; background-color: #f1f5f9; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+        .wrapper { width: 100%; table-layout: fixed; background-color: #f1f5f9; padding: 20px 0 40px 0; }
+        .main { background-color: #ffffff; margin: 0 auto; width: 100%; max-width: 600px; border-spacing: 0; color: #1e293b; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); border: 1px solid #e2e8f0; }
         
-        .alert-body { padding: 30px; }
-        .order-badge { display: inline-block; padding: 4px 10px; background: #C5A059; color: white; border-radius: 4px; font-weight: bold; font-size: 14px; margin-bottom: 20px; }
+        .header { background-color: #1a1a1a; padding: 30px; text-align: left; }
+        .logo { height: 40px; width: auto; vertical-align: middle; border: 0; }
+        .header-title { float: right; color: #C5A059; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-top: 12px; font-size: 13px; }
         
-        .customer-card { background: #f8f9fa; border-radius: 8px; padding: 20px; margin-bottom: 25px; border-left: 4px solid #4A3728; }
-        .customer-card h3 { margin: 0 0 10px 0; font-size: 13px; color: #888; text-transform: uppercase; }
-        .customer-card p { margin: 5px 0; color: #333; font-size: 15px; }
-
-        .items-table { width: 100%; border-collapse: collapse; margin-bottom: 25px; }
-        .items-table th { text-align: left; font-size: 11px; color: #aaa; text-transform: uppercase; padding: 10px 0; border-bottom: 1px solid #eee; }
-        .items-table td { padding: 12px 0; border-bottom: 1px solid #f5f5f5; vertical-align: top; }
+        .alert-banner { background-color: #C5A059; color: #ffffff; padding: 20px 30px; text-align: center; }
+        .alert-title { font-size: 20px; font-weight: 800; margin: 0; letter-spacing: -0.5px; }
         
-        .item-name { font-weight: bold; color: #4A3728; font-size: 14px; }
-        .item-meta { font-size: 12px; color: #777; margin-top: 2px; }
-        .item-qty { font-weight: bold; color: #555; }
-        .item-price { text-align: right; color: #333; font-weight: 500; }
+        .content { padding: 40px 30px; }
+        
+        .section-label { font-size: 11px; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; display: block; }
+        
+        .customer-card { background-color: #f8fafc; border-radius: 12px; padding: 25px; margin-bottom: 30px; border: 1px solid #e2e8f0; }
+        .customer-row { margin-bottom: 12px; border-bottom: 1px solid #f1f5f9; padding-bottom: 12px; }
+        .customer-row:last-child { margin-bottom: 0; border-bottom: none; padding-bottom: 0; }
+        .customer-label { font-size: 12px; color: #64748b; margin-bottom: 4px; display: block; font-weight: 600; }
+        .customer-value { font-size: 15px; font-weight: 600; color: #1e293b; }
+        
+        .items-table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        .items-table th { text-align: left; font-size: 11px; font-weight: 800; color: #94a3b8; text-transform: uppercase; padding-bottom: 10px; border-bottom: 2px solid #f1f5f9; }
+        .items-table td { padding: 15px 0; border-bottom: 1px solid #f1f5f9; }
+        
+        .item-name { font-weight: 700; color: #1a1a1a; font-size: 14px; }
+        .item-meta { font-size: 12px; color: #64748b; margin-top: 2px; }
+        .item-price { text-align: right; font-weight: 700; color: #1a1a1a; font-size: 14px; }
+        
+        .summary-box { background-color: #1a1a1a; color: #ffffff; padding: 25px; border-radius: 12px; text-align: right; }
+        .summary-label { font-size: 12px; color: #94a3b8; text-transform: uppercase; font-weight: 800; margin-bottom: 5px; letter-spacing: 0.5px; }
+        .summary-total { font-size: 30px; font-weight: 800; color: #C5A059; }
+        
+        .footer { padding: 30px; text-align: center; background-color: #f8fafc; border-top: 1px solid #e2e8f0; }
+        .action-button { display: inline-block; padding: 18px 35px; background-color: #1a1a1a; color: #ffffff !important; text-decoration: none !important; border-radius: 8px; font-weight: 800; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; border: 1px solid #C5A059; }
+        
+        .footer-note { font-size: 12px; color: #94a3b8; margin-top: 20px; line-height: 1.5; }
 
-        .summary-total { text-align: right; padding-top: 20px; border-top: 2px solid #eee; }
-        .summary-total span { font-size: 24px; font-weight: 900; color: #1e8e3e; }
-
-        .admin-footer { padding: 20px; text-align: center; background: #fcfcfc; border-top: 1px solid #eee; }
-        .admin-footer a { color: #4A3728; text-decoration: underline; font-size: 14px; font-weight: bold; }
+        /* Fix para evitar enlaces azules en Gmail/iOS */
+        a { color: inherit !important; text-decoration: none !important; }
+        
+        @media screen and (max-width: 600px) {
+            .header-title { display: none; }
+            .content { padding: 30px 20px; }
+        }
     </style>
 </head>
 <body>
-    <div class="alert-box">
-        <div class="alert-header">
-            <h1>Nueva Venta Recibida</h1>
-        </div>
-        <div class="alert-body">
-            <div class="order-badge">Pedido #{{ order.id }}</div>
-            
-            <div class="customer-card">
-                <h3>Datos del Cliente</h3>
-                <p><strong>Nombre:</strong> {{ order.contact_name }}</p>
-                <p><strong>Email:</strong> {{ order.contact_email }}</p>
-                <p><strong>WhatsApp:</strong> {{ order.contact_phone }}</p>
-                <p><strong>Dirección:</strong> {{ order.shipping_address }}</p>
-            </div>
+    <div class="wrapper">
+        <table class="main" align="center" width="600" cellpadding="0" cellspacing="0">
+            <tr>
+                <td class="header">
+                    <img src="https://diffioricafe.com/logoDiffiori.png" alt="DIFFIORI" class="logo" style="color: #C5A059; font-weight: 900; font-size: 20px;">
+                    <span class="header-title">Admin Notification</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="alert-banner">
+                    <h2 class="alert-title">🔥 ¡NUEVA VENTA RECIBIDA!</h2>
+                </td>
+            </tr>
+            <tr>
+                <td class="content">
+                    <div style="margin-bottom: 35px;">
+                        <span class="section-label">Orden General</span>
+                        <div style="font-size: 22px; font-weight: 800; color: #1a1a1a;">Pedido #{{ order.id }}</div>
+                        <div style="font-size: 13px; color: #64748b; margin-top: 5px;">Recibido el {{ order.created_at|date:"d M, Y - H:i" }}</div>
+                    </div>
 
-            <table class="items-table">
-                <thead>
-                    <tr>
-                        <th width="70%">Producto</th>
-                        <th width="10%" style="text-align: center;">Cant.</th>
-                        <th width="20%" style="text-align: right;">Precio</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for item in order.items.all %}
-                    <tr>
-                        <td>
-                            <div class="item-name">{{ item.product_name }}</div>
-                            <div class="item-meta">
-                                {% if item.product_variant %}
-                                    {{ item.product_variant.weight }} - {{ item.product_variant.grind }}
-                                {% else %}
-                                    Estandar
-                                {% endif %}
-                            </div>
-                        </td>
-                        <td style="text-align: center;" class="item-qty">{{ item.quantity }}</td>
-                        <td class="item-price">${{ item.price_at_purchase }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                    <span class="section-label">Información del Cliente</span>
+                    <div class="customer-card">
+                        <div class="customer-row">
+                            <span class="customer-label">Nombre del Cliente</span>
+                            <span class="customer-value" style="color: #1a1a1a;">{{ order.contact_name }}</span>
+                        </div>
+                        <div class="customer-row">
+                            <span class="customer-label">Correo Electrónico</span>
+                            <span class="customer-value"><a href="mailto:{{ order.contact_email }}" style="color: #1e293b !important; text-decoration: none !important;">{{ order.contact_email }}</a></span>
+                        </div>
+                        <div class="customer-row">
+                            <span class="customer-label">Teléfono / WhatsApp</span>
+                            <span class="customer-value"><a href="https://wa.me/{{ order.contact_phone }}" style="color: #1e293b !important; text-decoration: none !important;">{{ order.contact_phone }}</a></span>
+                        </div>
+                        <div class="customer-row">
+                            <span class="customer-label">Dirección de Entrega</span>
+                            <span class="customer-value" style="color: #1a1a1a;">{{ order.shipping_address }}</span>
+                        </div>
+                    </div>
 
-            <div class="summary-total">
-                <p style="margin:0; font-size: 12px; color: #999; text-transform: uppercase; font-weight: bold;">Monto Total Cobrado</p>
-                <span>${{ order.total_amount }} COP</span>
-            </div>
-        </div>
-        <div class="admin-footer">
-            <a href="http://localhost:8080/admin/orders/order/{{ order.id }}/change/">Ver detalle completo en el Admin</a>
-        </div>
+                    <span class="section-label">Detalle de Productos</span>
+                    <table class="items-table">
+                        <thead>
+                            <tr>
+                                <th width="70%">Producto</th>
+                                <th width="10%" style="text-align: center;">Cant.</th>
+                                <th width="20%" style="text-align: right;">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in order.items.all %}
+                            <tr>
+                                <td>
+                                    <div class="item-name">{{ item.product_name }}</div>
+                                    <div class="item-meta">
+                                        {% if item.product_variant %}
+                                            {{ item.product_variant.weight }} — {{ item.product_variant.grind }}
+                                        {% else %}
+                                            Variedad Estándar
+                                        {% endif %}
+                                    </div>
+                                </td>
+                                <td style="text-align: center; font-weight: 700; color: #1a1a1a;">{{ item.quantity }}</td>
+                                <td class="item-price" style="color: #1a1a1a; font-weight: 700;">${{ item.price_at_purchase }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                    <div class="summary-box">
+                        <div class="summary-label">Monto Total Cobrado</div>
+                        <div class="summary-total">${{ order.total_amount }} <small style="font-size: 14px; opacity: 0.8; font-weight: 400;">COP</small></div>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 40px;">
+                        <a href="https://diffioricafe.com/admin/orders/order/{{ order.id }}/change/" class="action-button" style="color: #ffffff !important; text-decoration: none !important;">Administrar Pedido</a>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="footer">
+                    <div class="footer-note">
+                        <strong>Aviso:</strong> Este es un mensaje automático del sistema.<br>
+                        Asegúrate de procesar este pedido en el panel administrativo para actualizar el estado del envío.
+                    </div>
+                </td>
+            </tr>
+        </table>
     </div>
 </body>
 </html>
