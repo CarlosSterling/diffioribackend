@@ -165,6 +165,16 @@ SPECTACULAR_SETTINGS = {
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # ────────────────────────────────────────────────────────────
+# Wompi Payment Gateway
+# ────────────────────────────────────────────────────────────
+WOMPI_PUBLIC_KEY    = os.environ.get("WOMPI_PUBLIC_KEY", "")
+WOMPI_PRIVATE_KEY   = os.environ.get("WOMPI_PRIVATE_KEY", "")
+WOMPI_EVENTS_KEY    = os.environ.get("WOMPI_EVENTS_KEY", "")
+WOMPI_INTEGRITY_KEY = os.environ.get("WOMPI_INTEGRITY_KEY", "")
+WOMPI_BASE_URL      = os.environ.get("WOMPI_BASE_URL", "https://sandbox.wompi.co/v1")
+WOMPI_REDIRECT_URL  = os.environ.get("WOMPI_REDIRECT_URL", "http://localhost:3000/checkout/return")
+
+# ────────────────────────────────────────────────────────────
 # Jazzmin Admin Theme
 # ────────────────────────────────────────────────────────────
 JAZZMIN_SETTINGS = {

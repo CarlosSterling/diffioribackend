@@ -17,6 +17,7 @@ class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Usuario")
     session_id = models.CharField(max_length=255, null=True, blank=True, help_text="ID de sesión de pago o carrito anónimo")
     payment_reference = models.CharField(max_length=255, null=True, blank=True, help_text="Referencia de la pasarela de pagos")
+    wompi_transaction_id = models.CharField(max_length=255, null=True, blank=True, help_text="ID de transacción en Wompi")
     
     total_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, verbose_name="Monto Total")
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='PENDING', verbose_name="Estado")

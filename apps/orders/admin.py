@@ -11,8 +11,8 @@ class OrderItemInline(admin.TabularInline):
 class OrderAdmin(admin.ModelAdmin):
     list_display = ('id', 'contact_name', 'total_amount', 'get_products', 'status_colored', 'contact_phone', 'created_at')
     list_filter = ('status', 'created_at')
-    search_fields = ('id', 'contact_name', 'contact_email', 'contact_phone', 'payment_reference')
-    readonly_fields = ('user', 'total_amount', 'created_at', 'updated_at', 'payment_reference', 'session_id')
+    search_fields = ('id', 'contact_name', 'contact_email', 'contact_phone', 'payment_reference', 'wompi_transaction_id')
+    readonly_fields = ('user', 'total_amount', 'created_at', 'updated_at', 'payment_reference', 'session_id', 'wompi_transaction_id')
     inlines = [OrderItemInline]
     
     def get_products(self, obj):

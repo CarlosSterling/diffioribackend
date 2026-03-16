@@ -1,16 +1,29 @@
-import hmac
 import hashlib
+import requests as http_requests
+from decimal import Decimal
 from django.conf import settings
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import AllowAny
 from apps.core.emails import send_order_confirmation, notify_admin_new_order
-
 
 from ..models import Order, OrderItem
 from .serializers import OrderSerializer, CheckoutSerializer
 from apps.catalog.models import ProductVariant
+
+
+def _order_response(order):
+    return {
+        "order_id": order.id,
+        "status": order.status,
+        "total_amount": str(order.total_amount),
+        "contact_name": order.contact_name,
+        "contact_email": order.contact_email,
+        "contact_phone": order.contact_phone,
+        "shipping_address": order.shipping_address,
+    }
+
 
 class OrderViewSet(viewsets.GenericViewSet):
     queryset = Order.objects.all()
@@ -24,7 +37,7 @@ class OrderViewSet(viewsets.GenericViewSet):
         serializer = CheckoutSerializer(data=request.data)
         if serializer.is_valid():
             data = serializer.validated_data
-            
+
             # Crear Orden Pendiente
             order = Order.objects.create(
                 user=request.user if request.user.is_authenticated else None,
@@ -35,19 +48,15 @@ class OrderViewSet(viewsets.GenericViewSet):
                 status='PENDING'
             )
 
-            from decimal import Decimal
             total = Decimal('0.00')
             # Agregar items y calcular total
             for item in data['items']:
                 v_id = item.get('variant_id')
                 quantity = int(item.get('quantity', 1))
-                
+
                 variant = None
                 price = Decimal('0.00')
-                
-                print(f"DEBUG: Processing item variant_id={v_id}, quantity={quantity}")
-                
-                # 1. Intentar buscar como Variante (por ID o slug)
+
                 from django.core.exceptions import MultipleObjectsReturned
                 try:
                     if str(v_id).isdigit():
@@ -56,14 +65,11 @@ class OrderViewSet(viewsets.GenericViewSet):
                         product = variant.product
                         product_name = f"{product.name} - {variant.weight} ({variant.grind})"
                     else:
-                        # Si es un slug, podría ser que el producto solo tenga una variante
                         variant = ProductVariant.objects.get(product__slug=v_id)
                         price = variant.price
                         product = variant.product
                         product_name = f"{product.name} - {variant.weight} ({variant.grind})"
-                    print(f"DEBUG: Found variant price={price}")
                 except (ProductVariant.DoesNotExist, ValueError, TypeError, MultipleObjectsReturned):
-                    # 2. Si no es variante (o hay muchas), buscar como Producto base
                     try:
                         from apps.catalog.models import Product
                         if str(v_id).isdigit():
@@ -72,10 +78,8 @@ class OrderViewSet(viewsets.GenericViewSet):
                             product = Product.objects.get(slug=v_id)
                         price = product.price or Decimal('0.00')
                         product_name = product.name
-                        variant = None # Asegurar que es None si es producto base
-                        print(f"DEBUG: Found product price={price}")
+                        variant = None
                     except (Product.DoesNotExist, ValueError, TypeError):
-                        print(f"DEBUG: Item NOT found: {v_id}")
                         continue
 
                 OrderItem.objects.create(
@@ -88,40 +92,49 @@ class OrderViewSet(viewsets.GenericViewSet):
                 )
                 total += (price * quantity)
 
-            print(f"DEBUG: Calculated total={total}")
             order.total_amount = total
-            
-            # SIMULACIÓN DE PAGOS
-            # Soporta: simulate=true (éxito por defecto) o simulate_status='FAILED'
-            is_simulation = request.data.get("simulate", False)
-            sim_status = request.data.get("simulate_status", "PAID").upper()
-
-            if is_simulation or "simulate_status" in request.data:
-                if sim_status == 'PAID':
-                    order.status = 'PAID'
-                    order.payment_reference = "SIMULATED-PAYMENT-SUCCESS"
-                elif sim_status == 'FAILED':
-                    order.status = 'FAILED'
-                    order.payment_reference = "SIMULATED-PAYMENT-FAILURE"
-            
             order.save()
-            
-            if order.status == 'PAID':
-                send_order_confirmation(order)
-                notify_admin_new_order(order)
 
-            # TODO: LLAMAR A LA API COMERCIAL DE PAGOS PARA CREAR SESIÓN 
-            payment_url = "https://checkout.sandbox.gateway.com/"
-            
+            # ── Crear Payment Link en Wompi ──────────────────────────
+            wompi_base_url    = getattr(settings, 'WOMPI_BASE_URL', 'https://sandbox.wompi.co/v1')
+            wompi_private_key = getattr(settings, 'WOMPI_PRIVATE_KEY', '')
+            wompi_redirect    = getattr(settings, 'WOMPI_REDIRECT_URL', '')
+            amount_in_cents   = int(total * 100)
+
+            try:
+                wompi_resp = http_requests.post(
+                    f"{wompi_base_url}/payment_links",
+                    json={
+                        "name": f"Pedido Diffiori #{order.id}",
+                        "description": f"Compra en Diffiori Café - {order.contact_name}",
+                        "single_use": True,
+                        "currency": "COP",
+                        "amount_in_cents": amount_in_cents,
+                        "redirect_url": f"{wompi_redirect}?order_id={order.id}",
+                        "collect_shipping": False,
+                        "expires_in_minutes": 30,
+                    },
+                    headers={"Authorization": f"Bearer {wompi_private_key}"},
+                    timeout=10,
+                )
+                wompi_resp.raise_for_status()
+                wompi_data = wompi_resp.json()
+                wompi_entry = wompi_data.get("data", {})
+                # Wompi returns the checkout URL in "link"; fallback to constructing from id
+                link_id = wompi_entry.get("id", "")
+                payment_url = wompi_entry.get("link") or f"https://checkout.wompi.co/l/{link_id}"
+                order.payment_reference = link_id
+                order.save(update_fields=["payment_reference"])
+            except http_requests.RequestException as e:
+                print(f"ERROR Wompi API: {e}")
+                return Response(
+                    {"error": "Error al crear el enlace de pago. Intenta de nuevo."},
+                    status=status.HTTP_502_BAD_GATEWAY
+                )
+
             return Response({
-                "message": "Order created successfully",
                 "order_id": order.id,
-                "status": order.status,
-                "total_amount": order.total_amount,
-                "shipping_address": order.shipping_address,
-                "contact_name": order.contact_name,
-                "contact_phone": order.contact_phone,
-                "payment_url": payment_url
+                "payment_url": payment_url,
             }, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -129,32 +142,139 @@ class OrderViewSet(viewsets.GenericViewSet):
     @action(detail=False, methods=['post'], permission_classes=[AllowAny])
     def webhook(self, request):
         """
-        Endpoint que recibe las notificaciones de la pasarela de pagos.
-        Debe verificar la firma HMAC para evitar ataques de spoofing.
+        Endpoint que recibe las notificaciones de Wompi.
+        Valida la firma SHA256 con la events_key según la especificación de Wompi.
         """
-        payload = request.body
-        sig_header = request.headers.get('Signature')
+        data = request.data
 
-        # Ejemplo de validación HMAC (común en webhooks robustos)
-        secret = getattr(settings, 'WEBHOOK_SECRET', b'default_secret').encode('utf-8')
-        hash_calc = hmac.new(secret, payload, hashlib.sha256).hexdigest()
+        # ── 1. Validar firma Wompi ─────────────────────────────
+        sig               = data.get("signature", {})
+        props             = sig.get("properties", [])
+        checksum_received = sig.get("checksum", "")
+        events_key        = getattr(settings, 'WOMPI_EVENTS_KEY', '')
 
-        # En un escenario real, if sig_header != hash_calc -> rechazar
-        # Asumiendo validación exitosa:
-        event = request.data.get("event")
-        order_id = request.data.get("order_id")
+        concat_str = ""
+        for prop in props:
+            value = data.get("data", {})
+            for part in prop.split("."):
+                value = value.get(part, "") if isinstance(value, dict) else ""
+            concat_str += str(value)
+        concat_str += events_key
 
-        if event == "payment.success":
-            try:
-                order = Order.objects.get(id=order_id)
-                order.status = 'PAID'
-                order.payment_reference = request.data.get("transaction_id")
-                order.save()
-                
-                # Notificar a ambos
-                send_order_confirmation(order)
-                notify_admin_new_order(order)
-            except Order.DoesNotExist:
-                pass
+        checksum_computed = hashlib.sha256(concat_str.encode("utf-8")).hexdigest()
+        if checksum_computed != checksum_received:
+            print(f"WEBHOOK: firma inválida. Esperado={checksum_computed}, recibido={checksum_received}")
+            return Response({"error": "Invalid signature"}, status=status.HTTP_400_BAD_REQUEST)
+
+        # ── 2. Manejar evento ──────────────────────────────────
+        event = data.get("event")
+        if event == "transaction.updated":
+            transaction  = data.get("data", {}).get("transaction", {})
+            wompi_status = transaction.get("status", "")
+            reference    = transaction.get("reference", "")   # = ID del payment link guardado en payment_reference
+            wompi_tx_id  = transaction.get("id", "")
+
+            STATUS_MAP = {
+                "APPROVED": "PAID",
+                "DECLINED": "FAILED",
+                "VOIDED":   "CANCELED",
+                "ERROR":    "FAILED",
+            }
+            order_status = STATUS_MAP.get(wompi_status)
+
+            if order_status:
+                try:
+                    order = Order.objects.get(payment_reference=reference)
+                except Order.DoesNotExist:
+                    print(f"WEBHOOK: Orden no encontrada para reference={reference}")
+                    return Response(status=status.HTTP_200_OK)
+
+                # Idempotencia: no pisar estados finales
+                if order.status in ("PAID", "SHIPPED", "DELIVERED"):
+                    return Response(status=status.HTTP_200_OK)
+
+                order.status = order_status
+                order.wompi_transaction_id = wompi_tx_id
+                order.save(update_fields=["status", "wompi_transaction_id"])
+
+                if order.status == "PAID":
+                    send_order_confirmation(order)
+                    notify_admin_new_order(order)
 
         return Response(status=status.HTTP_200_OK)
+
+    @action(detail=False, methods=['get'], url_path='new-paid')
+    def new_paid(self, request):
+        """Devuelve pedidos PAID con id > since_id. Solo para staff del admin."""
+        if not request.user.is_staff:
+            return Response(status=status.HTTP_403_FORBIDDEN)
+        since_id = int(request.query_params.get('since_id', 0))
+        orders = Order.objects.filter(status='PAID', id__gt=since_id).values('id', 'contact_name', 'total_amount')
+        return Response({"orders": list(orders)})
+
+    @action(detail=False, methods=['post'], permission_classes=[AllowAny], url_path='verify-payment')
+    def verify_payment(self, request):
+        """
+        Consulta el estado de una transacción en Wompi y actualiza la orden.
+        Body: { "wompi_transaction_id": "...", "order_id": 123 }
+        """
+        wompi_tx_id = request.data.get("wompi_transaction_id", "")
+        order_id    = request.data.get("order_id")
+
+        if not wompi_tx_id or not order_id:
+            return Response({"error": "wompi_transaction_id and order_id are required"}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            order = Order.objects.get(pk=order_id)
+        except Order.DoesNotExist:
+            return Response({"error": "Order not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        # Idempotencia: si ya tiene estado final no consultamos de nuevo
+        if order.status in ("PAID", "SHIPPED", "DELIVERED", "FAILED", "CANCELED"):
+            return Response(_order_response(order))
+
+        wompi_base_url    = getattr(settings, 'WOMPI_BASE_URL', 'https://sandbox.wompi.co/v1')
+        wompi_private_key = getattr(settings, 'WOMPI_PRIVATE_KEY', '')
+
+        try:
+            resp = http_requests.get(
+                f"{wompi_base_url}/transactions/{wompi_tx_id}",
+                headers={"Authorization": f"Bearer {wompi_private_key}"},
+                timeout=10,
+            )
+            resp.raise_for_status()
+            tx_data = resp.json().get("data", {})
+        except http_requests.RequestException as e:
+            print(f"ERROR verify-payment Wompi: {e}")
+            return Response({"error": "No se pudo consultar Wompi"}, status=status.HTTP_502_BAD_GATEWAY)
+
+        wompi_status = tx_data.get("status", "")
+        STATUS_MAP = {
+            "APPROVED": "PAID",
+            "DECLINED": "FAILED",
+            "VOIDED":   "CANCELED",
+            "ERROR":    "FAILED",
+        }
+        new_status = STATUS_MAP.get(wompi_status)
+        if new_status and new_status != order.status:
+            order.status = new_status
+            order.wompi_transaction_id = wompi_tx_id
+            order.save(update_fields=["status", "wompi_transaction_id"])
+            if order.status == "PAID":
+                send_order_confirmation(order)
+                notify_admin_new_order(order)
+
+        return Response(_order_response(order))
+
+    @action(detail=True, methods=['get'], permission_classes=[AllowAny], url_path='status')
+    def order_status(self, _request, pk=None):
+        """
+        Devuelve el estado actual de una orden por ID.
+        Usado por la página /checkout/return para verificar el resultado del pago.
+        """
+        try:
+            order = Order.objects.get(pk=pk)
+        except Order.DoesNotExist:
+            return Response({"error": "Order not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        return Response(_order_response(order))
