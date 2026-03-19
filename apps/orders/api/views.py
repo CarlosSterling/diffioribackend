@@ -12,6 +12,8 @@ from ..models import Order, OrderItem
 from .serializers import OrderSerializer, CheckoutSerializer
 from apps.catalog.models import ProductVariant
 
+WOMPI_MIN_AMOUNT_IN_CENTS = 150000
+
 
 def _order_response(order):
     return {
@@ -49,9 +51,11 @@ class OrderViewSet(viewsets.GenericViewSet):
             )
 
             total = Decimal('0.00')
+            valid_items = 0
             # Agregar items y calcular total
             for item in data['items']:
                 v_id = item.get('variant_id')
+                product_id = item.get('product_id')
                 quantity = int(item.get('quantity', 1))
 
                 variant = None
@@ -72,10 +76,11 @@ class OrderViewSet(viewsets.GenericViewSet):
                 except (ProductVariant.DoesNotExist, ValueError, TypeError, MultipleObjectsReturned):
                     try:
                         from apps.catalog.models import Product
-                        if str(v_id).isdigit():
-                            product = Product.objects.get(id=v_id)
+                        lookup_value = product_id if product_id not in (None, "") else v_id
+                        if str(lookup_value).isdigit():
+                            product = Product.objects.get(id=lookup_value)
                         else:
-                            product = Product.objects.get(slug=v_id)
+                            product = Product.objects.get(slug=lookup_value)
                         price = product.price or Decimal('0.00')
                         product_name = product.name
                         variant = None
@@ -91,6 +96,14 @@ class OrderViewSet(viewsets.GenericViewSet):
                     price_at_purchase=price
                 )
                 total += (price * quantity)
+                valid_items += 1
+
+            if valid_items == 0 or total <= Decimal('0.00'):
+                order.delete()
+                return Response(
+                    {"error": "No se pudieron validar los productos del carrito. Actualiza la pagina y vuelve a intentarlo."},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
 
             order.total_amount = total
             order.save()
@@ -100,6 +113,15 @@ class OrderViewSet(viewsets.GenericViewSet):
             wompi_private_key = getattr(settings, 'WOMPI_PRIVATE_KEY', '')
             wompi_redirect    = getattr(settings, 'WOMPI_REDIRECT_URL', '')
             amount_in_cents   = int(total * 100)
+
+            if amount_in_cents < WOMPI_MIN_AMOUNT_IN_CENTS:
+                order.delete()
+                return Response(
+                    {
+                        "error": "El valor minimo para pagar con Wompi es $1.500 COP. Agrega mas productos al carrito para continuar."
+                    },
+                    status=status.HTTP_400_BAD_REQUEST
+                )
 
             try:
                 wompi_resp = http_requests.post(
@@ -126,9 +148,13 @@ class OrderViewSet(viewsets.GenericViewSet):
                 order.payment_reference = link_id
                 order.save(update_fields=["payment_reference"])
             except http_requests.RequestException as e:
-                print(f"ERROR Wompi API: {e}")
+                error_body = ""
+                if getattr(e, "response", None) is not None:
+                    error_body = e.response.text
+                order.delete()
+                print(f"ERROR Wompi API: {e} BODY={error_body}")
                 return Response(
-                    {"error": "Error al crear el enlace de pago. Intenta de nuevo."},
+                    {"error": "No fue posible crear el enlace de pago con Wompi. Revisa el valor del pedido e intenta de nuevo."},
                     status=status.HTTP_502_BAD_GATEWAY
                 )
 
@@ -153,13 +179,14 @@ class OrderViewSet(viewsets.GenericViewSet):
         checksum_received = sig.get("checksum", "")
         events_key        = getattr(settings, 'WOMPI_EVENTS_KEY', '')
 
+        timestamp         = data.get("timestamp", "")
         concat_str = ""
         for prop in props:
             value = data.get("data", {})
             for part in prop.split("."):
                 value = value.get(part, "") if isinstance(value, dict) else ""
             concat_str += str(value)
-        concat_str += events_key
+        concat_str += f"{timestamp}{events_key}"
 
         checksum_computed = hashlib.sha256(concat_str.encode("utf-8")).hexdigest()
         if checksum_computed != checksum_received:
