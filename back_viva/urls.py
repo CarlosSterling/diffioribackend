@@ -11,10 +11,10 @@ from drf_spectacular.views import (
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("password-reset/", auth_views.PasswordResetView.as_view(), name="admin_password_reset"),
-    path("password-reset/done/", auth_views.PasswordResetDoneView.as_view(), name="password_reset_done"),
-    path("reset/<uidb64>/<token>/", auth_views.PasswordResetConfirmView.as_view(), name="password_reset_confirm"),
-    path("reset/done/", auth_views.PasswordResetCompleteView.as_view(), name="password_reset_complete"),
+    path("admin/password-reset/", auth_views.PasswordResetView.as_view(), name="admin_password_reset"),
+    path("admin/password-reset/done/", auth_views.PasswordResetDoneView.as_view(), name="password_reset_done"),
+    path("admin/reset/<uidb64>/<token>/", auth_views.PasswordResetConfirmView.as_view(), name="password_reset_confirm"),
+    path("admin/reset/done/", auth_views.PasswordResetCompleteView.as_view(), name="password_reset_complete"),
 
     # ─── Documentación OpenAPI ───
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
