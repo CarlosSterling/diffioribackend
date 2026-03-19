@@ -23,6 +23,8 @@ environ.Env.read_env(BASE_DIR / ".env")
 
 DEBUG = env.bool("DEBUG")
 SECRET_KEY = env("SECRET_KEY")
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+LOGIN_REDIRECT_URL = '/admin/'
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost,127.0.0.1,api-diffiori,web-diffiori").split(",")
 
 CSRF_TRUSTED_ORIGINS = os.environ.get("CSRF_TRUSTED_ORIGINS", "http://localhost:3000,http://localhost:8080").split(",")

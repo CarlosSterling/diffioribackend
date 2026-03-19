@@ -1708,3 +1708,22 @@ input[type="submit"][value*="si"] {
     margin-bottom: 2rem !important;
     line-height: 1.6 !important;
 }
+
+/* --- FORGOT PASSWORD LINK --- */
+.forgot-password-luxe {
+    color: var(--diffiori-gold) !important;
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.5px !important;
+    text-decoration: none !important;
+    transition: all 0.3s ease !important;
+    display: inline-block !important;
+    margin-top: 10px !important;
+    border-bottom: 1.5px solid transparent !important;
+}
+
+.forgot-password-luxe:hover {
+    color: var(--diffiori-brown) !important;
+    border-bottom: 1.5px solid var(--diffiori-gold) !important;
+    transform: translateY(-1px);
+}
